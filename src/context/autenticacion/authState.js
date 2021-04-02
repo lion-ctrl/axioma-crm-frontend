@@ -8,6 +8,7 @@ import {
 	LOGIN_ERROR,
 	OBTENER_USUARIO,
 	CERRAR_SESION,
+	LIMPIAR_MENSAJE
 } from "../../types";
 
 import axios from "../../config/clienteAxios";
@@ -37,6 +38,12 @@ const AuthState = ({ children }) => {
 				type: LOGIN_ERROR,
 				payload: { msg: error.response.data.msg, categoria: "error" },
 			});
+
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE
+				})
+			}, 1000);
 		}
 	};
 
@@ -58,6 +65,12 @@ const AuthState = ({ children }) => {
 				type: LOGIN_ERROR,
 				payload: { msg: error.response.data.msg, categoria: "error" },
 			});
+
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE
+				})
+			}, 1000);
 		}
 	};
 
@@ -66,9 +79,16 @@ const AuthState = ({ children }) => {
 		dispatch({
 			type: CERRAR_SESION,
 			payload: {
-				msg: "Sesión Cerrada",categoria: "exito"
-			}
-		})
+				msg: "Sesión Cerrada",
+				categoria: "success",
+			},
+		});
+
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE
+			})
+		}, 1000);
 	};
 
 	return (
@@ -80,7 +100,7 @@ const AuthState = ({ children }) => {
 				cargando: state.cargando,
 				loginUsuario,
 				usuarioAutenticado,
-				cerrarSesion
+				cerrarSesion,
 			}}
 		>
 			{children}

@@ -1,4 +1,12 @@
-import { LOGIN_EXITO, LOGIN_ERROR, OBTENER_USUARIO, CERRAR_SESION } from "../../types";
+import {
+	LOGIN_EXITO,
+	LOGIN_ERROR,
+	OBTENER_USUARIO,
+	CERRAR_SESION,
+	REGISTRAR_USUARIO_EXITO,
+	REGISTRAR_USUARIO_ERROR,
+	LIMPIAR_MENSAJE
+} from "../../types";
 
 const authReducer = (state, action) => {
 	switch (action.type) {
@@ -27,6 +35,11 @@ const authReducer = (state, action) => {
 				autenticado: true,
 				cargando: false,
 			};
+		case LIMPIAR_MENSAJE:
+			return {
+				...state,
+				mensaje: null
+			}
 		default:
 			return state;
 	}

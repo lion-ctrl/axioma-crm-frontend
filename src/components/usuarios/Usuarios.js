@@ -1,9 +1,17 @@
-import React from "react";
+import React,{useContext,useEffect} from "react";
 import { Link } from "react-router-dom";
+
+import usuariosContext from "../../context/usuarios/usuariosContext"
 
 import Layout from "../Layout/Layout";
 
 const Usuarios = () => {
+	// context
+	const {obtenerUsuarios,usuarios} = useContext(usuariosContext);
+
+	useEffect(() => {
+		obtenerUsuarios();
+	}, [])
 	return (
 		<Layout>
 			<h1 className="text-2xl text-gray-800 font-light">Usuarios</h1>
@@ -14,6 +22,8 @@ const Usuarios = () => {
 			>
 				Nuevo Usuario
 			</Link>
+
+			{}
 		</Layout>
 	);
 };
