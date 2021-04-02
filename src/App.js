@@ -8,19 +8,26 @@ import Usuarios from "./components/usuarios/Usuarios"
 
 import Pedidos from "./components/pedidos/Pedidos"
 
+import AuthState from "./context/autenticacion/authState";
+import AlertaState from "./context/alertas/alertaState";
+
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
+    <AuthState>
+      <AlertaState>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            
+            <Route exact path="/productos" component={Productos} />
         
-        <Route exact path="/productos" component={Productos} />
-
-        <Route exact path="/usuarios" component={Usuarios} />
-
-        <Route exact path="/pedidos" component={Pedidos} />
-      </Switch>
-    </Router>
+            <Route exact path="/usuarios" component={Usuarios} />
+        
+            <Route exact path="/pedidos" component={Pedidos} />
+          </Switch>
+        </Router>
+      </AlertaState>
+    </AuthState>
   );
 }
 
