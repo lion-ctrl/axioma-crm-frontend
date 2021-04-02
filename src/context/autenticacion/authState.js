@@ -3,7 +3,12 @@ import React, { useReducer } from "react";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 
-import { LOGIN_EXITO, LOGIN_ERROR, OBTENER_USUARIO } from "../../types";
+import {
+	LOGIN_EXITO,
+	LOGIN_ERROR,
+	OBTENER_USUARIO,
+	CERRAR_SESION,
+} from "../../types";
 
 import axios from "../../config/clienteAxios";
 import tokenAuth from "../../config/tokenAuth";
@@ -56,6 +61,16 @@ const AuthState = ({ children }) => {
 		}
 	};
 
+	// cerrar sesion
+	const cerrarSesion = () => {
+		dispatch({
+			type: CERRAR_SESION,
+			payload: {
+				msg: "Sesión Cerrada",categoria: "exito"
+			}
+		})
+	};
+
 	return (
 		<authContext.Provider
 			value={{
@@ -65,6 +80,7 @@ const AuthState = ({ children }) => {
 				cargando: state.cargando,
 				loginUsuario,
 				usuarioAutenticado,
+				cerrarSesion
 			}}
 		>
 			{children}

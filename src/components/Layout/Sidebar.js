@@ -11,6 +11,15 @@ const Sidebar = () => {
 			<nav className="mt-5 list-none">
 				<li
 					className={
+						history.location.pathname === "/principal" ? "bg-blue-800 p-2" : "p-2"
+					}
+				>
+					<Link to={"/principal"} className="text-white mb-2 block">
+						Panel Principal
+					</Link>
+				</li>
+				<li
+					className={
 						history.location.pathname === "/usuarios" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>

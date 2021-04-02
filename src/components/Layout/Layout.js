@@ -1,7 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import Sidebar from "./Sidebar"
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 const Layout = ({ children }) => {
 	const history = useHistory();
@@ -13,14 +14,14 @@ const Layout = ({ children }) => {
 				</div>
 			) : (
 				<div className="bg-gray-200 min-h-screen">
-                <div className="md:flex min-h-screen">
-                    <Sidebar/>
-                    <main className="md:w-4/5 p-5 md:min-h-screen">
-                        {/* <Header/> */}
-                        {children}
-                    </main>
-                </div>
-            </div>
+					<div className="md:flex min-h-screen">
+						<Sidebar />
+						<main className="md:w-4/5 p-5 md:min-h-screen">
+							<Header />
+							{children}
+						</main>
+					</div>
+				</div>
 			)}
 		</>
 	);

@@ -21,7 +21,7 @@ const Login = () => {
 			mostrarAlerta(mensaje.msg, mensaje.categoria);
 		}
 		if (autenticado) {
-			history.push("/productos");
+			history.push("/principal");
 		}
 		// eslint-disable-next-line
 	}, [mensaje,autenticado]);
