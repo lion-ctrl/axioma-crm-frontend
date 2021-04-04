@@ -5,6 +5,8 @@ import {
 	ELIMINAR_USUARIO_EXITO,
     ELIMINAR_USUARIO_ERROR,
 	LIMPIAR_MENSAJE,
+    OBTENER_USUARIO_EXITO,
+    OBTENER_USUARIO_ERROR
 } from "../../types";
 
 const usuariosReducer = (state, action) => {
@@ -17,6 +19,7 @@ const usuariosReducer = (state, action) => {
 		case REGISTRAR_USUARIO_EXITO:
 		case REGISTRAR_USUARIO_ERROR:
         case ELIMINAR_USUARIO_ERROR:
+        case OBTENER_USUARIO_ERROR:
 			return {
 				...state,
 				mensajeusuario: action.payload,
@@ -29,6 +32,11 @@ const usuariosReducer = (state, action) => {
 					(usuario) => usuario._id !== action.payload._id
 				),
 			};
+        case OBTENER_USUARIO_EXITO:
+            return {
+                ...state,
+                usuarioseleccionado: action.payload
+            }
 		case LIMPIAR_MENSAJE:
 			return {
 				...state,

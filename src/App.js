@@ -9,6 +9,7 @@ import Productos from "./components/productos/Productos";
 
 import Usuarios from "./components/usuarios/Usuarios";
 import NuevoUsuario from "./components/usuarios/NuevoUsuario";
+import VerUsuario from "./components/usuarios/VerUsuario";
 
 import Pedidos from "./components/pedidos/Pedidos";
 
@@ -33,6 +34,7 @@ function App() {
           
               <RutaPrivada exact path="/usuarios" component={Usuarios} />
               <RutaPrivada exact path="/nuevo-usuario" component={NuevoUsuario} />
+              <RutaPrivada exact path="/ver-usuario/:id" component={VerUsuario} />
           
               <RutaPrivada exact path="/productos" component={Productos} />
           

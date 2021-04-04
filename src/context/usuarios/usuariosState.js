@@ -10,6 +10,8 @@ import {
 	LIMPIAR_MENSAJE,
 	ELIMINAR_USUARIO_EXITO,
 	ELIMINAR_USUARIO_ERROR,
+	OBTENER_USUARIO_EXITO,
+	OBTENER_USUARIO_ERROR,
 } from "../../types";
 
 import axios from "../../config/clienteAxios";
@@ -80,7 +82,7 @@ const UsuariosState = ({ children }) => {
 		} catch (error) {
 			dispatch({
 				type: ELIMINAR_USUARIO_ERROR,
-				payload: {msg: error.response.data.msg, categoria:"error"}
+				payload: { msg: error.response.data.msg, categoria: "error" },
 			});
 		}
 		setTimeout(() => {
@@ -88,6 +90,32 @@ const UsuariosState = ({ children }) => {
 				type: LIMPIAR_MENSAJE,
 			});
 		}, 1000);
+	};
+
+	// Ver usuario
+	const seleccionarUsuario = async (_id) => {
+			try {
+				const token = localStorage.getItem("token");
+				if (token) {
+					tokenAuth(token);
+				}
+				const usuario = await axios.get(`/api/usuarios/${_id}`);
+				dispatch({
+					type: OBTENER_USUARIO_EXITO,
+					payload: usuario.data,
+				});
+			} catch (error) {
+				dispatch({
+					type: OBTENER_USUARIO_ERROR,
+					payload: { msg: error.response.data.msg, categoria: "error" },
+				});
+
+				setTimeout(() => {
+					dispatch({
+						type: LIMPIAR_MENSAJE,
+					});
+				}, 1000);
+			}
 	};
 
 	return (
@@ -99,6 +127,7 @@ const UsuariosState = ({ children }) => {
 				obtenerUsuarios,
 				registrarUsuario,
 				eliminarUsuario,
+				seleccionarUsuario,
 			}}
 		>
 			{children}

@@ -1,11 +1,12 @@
 import React from "react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Usuario = ({ usuario, eliminarUsuario }) => {
 	const eliminarEmpleado = (_id) => {
 		Swal.fire({
 			title: "¿Seguro?",
-			text: "Un Producto eliminado no se puede recuperar",
+			text: "Un empleado eliminado no se puede recuperar",
 			icon: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
@@ -20,7 +21,7 @@ const Usuario = ({ usuario, eliminarUsuario }) => {
 	};
 	return (
 		<div
-			className={` border-t-4 mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg`}
+			className={`mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg`}
 		>
 			<div>
 				<p className="font-bold text-gray-800">
@@ -45,8 +46,8 @@ const Usuario = ({ usuario, eliminarUsuario }) => {
 				</p>
 			</div>
 			<div>
-				<button
-					// onClick={eliminarPedidoActual}
+				<Link
+					to={`/ver-usuario/${usuario._id}`}
 					className="flex items-center justify-center mt-4 bg-blue-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
 				>
 					Ver Empleado{" "}
@@ -63,7 +64,7 @@ const Usuario = ({ usuario, eliminarUsuario }) => {
 							clipRule="evenodd"
 						/>
 					</svg>
-				</button>
+				</Link>
 
 				<button
 					onClick={() => eliminarEmpleado(usuario._id)}
