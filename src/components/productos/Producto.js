@@ -1,7 +1,40 @@
-import React from "react";
+import React,{useContext,useEffect} from "react";
 import { Link } from "react-router-dom";
+import productosContext from "../../context/productos/productosContext";
+import Swal from "sweetalert2";
 
 const Producto = ({ producto }) => {
+
+	// * Context
+	const {eliminarProducto,mensajeproducto} = useContext(productosContext);
+
+	useEffect(() => {
+		if (mensajeproducto) {
+			if (mensajeproducto.categoria === "error") {
+				Swal.fire("Error",mensajeproducto.msg,mensajeproducto.categoria);
+			} else {
+				Swal.fire("Eliminado",mensajeproducto.msg,mensajeproducto.categoria);
+			}
+		}
+	}, [mensajeproducto])
+
+	const eliminarProductoClick = (_id) => {
+		Swal.fire({
+			title: "¿Seguro?",
+			text: "Un producto eliminado no se puede recuperar",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#3f3434",
+			confirmButtonText: "Si, Eliminar",
+			cancelButtonText: "No, Cancelar",
+		}).then(async (result) => {
+			if (result.isConfirmed) {
+				eliminarProducto(_id);
+			}
+		});
+	}
+
 	return (
 		<div className="mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg">
 			<div>
@@ -10,6 +43,13 @@ const Producto = ({ producto }) => {
 				</p>
 				<p className="my-2">Ganancias: {producto.ganancias}$</p>
 				<p className="my-2">Precio de Venta: {producto.precioVenta}$</p>
+				{producto.imagen && (
+					<img
+						src={`http://localhost:4000/uploads/productos/${producto.imagen}`}
+						alt="producto imagen"
+						className="w-full h-60 object-cover"
+					/>
+				)}
 			</div>
 			<div>
 				<Link
@@ -42,15 +82,15 @@ const Producto = ({ producto }) => {
 						className="h-5 w-5"
 						viewBox="0 0 20 20"
 						fill="currentColor"
-                        // eslint-disable-next-line
-                        className="w-4 h-4 ml-2"
+						// eslint-disable-next-line
+						className="w-4 h-4 ml-2"
 					>
 						<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
 					</svg>
 				</Link>
 
 				<button
-					// onClick={() => eliminarEmpleado(usuario._id)}
+					onClick={() => eliminarProductoClick(producto._id)}
 					className="flex items-center justify-center mt-4 bg-red-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full text-center"
 				>
 					Eliminar Producto{" "}

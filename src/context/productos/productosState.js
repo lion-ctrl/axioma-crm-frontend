@@ -14,6 +14,8 @@ import {
 	CREAR_PRODUCTO_EXITO,
 	CREAR_PRODUCTO_ERROR,
 	LIMPIAR_MENSAJE,
+	ELIMINAR_PRODUCTO_EXITO,
+	ELIMINAR_PRODUCTO_ERROR,
 } from "../../types";
 
 const ProductoState = ({ children }) => {
@@ -101,6 +103,22 @@ const ProductoState = ({ children }) => {
 			});
 		}, 1000);
 	};
+
+	const eliminarProducto = async (_id) => {
+		try {
+			const res = await axios.delete(`/api/productos/${_id}`);
+			dispatch({
+				type: ELIMINAR_PRODUCTO_EXITO,
+				payload: { msg: res.data.msg, categoria: "success", _id },
+			});
+		} catch (error) {
+			dispatch({
+				type: ELIMINAR_PRODUCTO_ERROR,
+				payload: { msg: error.response.data.msg, categoria: "error" },
+			});
+		}
+	}
+
 	return (
 		<productosContext.Provider
 			value={{
@@ -110,6 +128,7 @@ const ProductoState = ({ children }) => {
 				obtenerProductos,
 				buscarProducto,
 				nuevoProducto,
+				eliminarProducto
 			}}
 		>
 			{children}

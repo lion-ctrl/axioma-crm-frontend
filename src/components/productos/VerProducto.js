@@ -45,6 +45,7 @@ const VerProducto = ({ match, history }) => {
 		cantidad,
 		costoTotal,
 		precioCosto,
+		imagen
 	} = productoseleccionado;
 
 	const data = [{ nombre: "Ganancias", ganancias, inversion: costoTotal }];
@@ -58,6 +59,13 @@ const VerProducto = ({ match, history }) => {
 					<p className="my-2">Costo: ${precioCosto}</p>
 					<p className="my-2">Precio de Venta: ${precioVenta}</p>
 					<p className="my-2">Disponibles: {cantidad}</p>
+					{imagen && (
+						<img
+							src={`http://localhost:4000/uploads/productos/${imagen}`}
+							alt="producto imagen"
+							className="w-full max-h-full object-cover"
+						/>
+					)}
 				</div>
 				<div>
 					<ResponsiveContainer width={"99%"} height={550}>
