@@ -11,7 +11,9 @@ import {
 	OBTENER_PRODUCTOS_EXITO,
 	OBTENER_PRODUCTO_ERROR,
 	OBTENER_PRODUCTO_EXITO,
-    LIMPIAR_MENSAJE
+	CREAR_PRODUCTO_EXITO,
+	CREAR_PRODUCTO_ERROR,
+	LIMPIAR_MENSAJE,
 } from "../../types";
 
 const ProductoState = ({ children }) => {
@@ -64,16 +66,40 @@ const ProductoState = ({ children }) => {
 			} catch (error) {
 				dispatch({
 					type: OBTENER_PRODUCTO_ERROR,
-					payload: error.response.data.msg,
+					payload: { msg: error.response.data.msg, categoria: "error" },
 				});
-                setTimeout(() => {
-                    dispatch({
-                        type: LIMPIAR_MENSAJE
-                    })
-                }, 1000);
+				setTimeout(() => {
+					dispatch({
+						type: LIMPIAR_MENSAJE,
+					});
+				}, 1000);
 			}
-
 		}
+	};
+
+	const nuevoProducto = async (datos) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.post("/api/productos", datos);
+			dispatch({
+				type: CREAR_PRODUCTO_EXITO,
+				payload: { msg: res.data.msg, categoria: "success" },
+			});
+		} catch (error) {
+			dispatch({
+				type: CREAR_PRODUCTO_ERROR,
+				payload: { msg: error.response.data.msg, categoria: "error" },
+			});
+		}
+
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 1000);
 	};
 	return (
 		<productosContext.Provider
@@ -83,6 +109,7 @@ const ProductoState = ({ children }) => {
 				mensajeproducto: state.mensajeproducto,
 				obtenerProductos,
 				buscarProducto,
+				nuevoProducto,
 			}}
 		>
 			{children}

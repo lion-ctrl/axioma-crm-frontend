@@ -3,6 +3,8 @@ import {
 	OBTENER_PRODUCTOS_EXITO,
 	OBTENER_PRODUCTO_EXITO,
 	OBTENER_PRODUCTO_ERROR,
+	CREAR_PRODUCTO_EXITO,
+	CREAR_PRODUCTO_ERROR,
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -18,9 +20,11 @@ const productosReducer = (state, action) => {
 				productoseleccionado: action.payload,
 			};
 		case OBTENER_PRODUCTO_ERROR:
+		case CREAR_PRODUCTO_EXITO:
+		case CREAR_PRODUCTO_ERROR:
 			return {
 				...state,
-				mensajeproducto: { msg: action.payload, categoria: "error" },
+				mensajeproducto: action.payload,
 			};
 		case LIMPIAR_MENSAJE:
 			return {
