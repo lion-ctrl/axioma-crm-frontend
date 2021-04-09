@@ -25,6 +25,8 @@ import ProductoState from "./context/productos/productosState";
 // Rutas
 import RutaPrivada from "./components/rutas/RutaPrivada";
 
+// TODO: Paginacion para los productos
+
 function App() {
 	return (
 		<AuthState>

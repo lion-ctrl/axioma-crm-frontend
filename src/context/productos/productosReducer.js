@@ -9,8 +9,8 @@ import {
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
 	ACTUALIZAR_PRODUCTO_ERROR,
-	ELIMINAR_FILTRO,
-	FILTRAR_CATEGORIA,
+	PAGINA_SIGUIENTE,
+	PAGINA_ANTERIOR,
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -19,7 +19,14 @@ const productosReducer = (state, action) => {
 			return {
 				...state,
 				productos: action.payload,
-				productosfiltrados: action.payload,
+				productosfiltrados: action.payload.slice(
+					state.desde,
+					state.productosporpagina
+				),
+				totalproductos: action.payload.length,
+				cantidadpaginas: Math.ceil(
+					action.payload.length / state.productosporpagina
+				),
 			};
 		case OBTENER_PRODUCTO_EXITO:
 			return {
@@ -39,7 +46,7 @@ const productosReducer = (state, action) => {
 		case ELIMINAR_PRODUCTO_EXITO:
 			return {
 				...state,
-				productos: state.productos.filter(
+				productosfiltrados: state.productos.filter(
 					(producto) => producto._id !== action.payload._id
 				),
 				mensajeproducto: {
@@ -52,17 +59,15 @@ const productosReducer = (state, action) => {
 				...state,
 				mensajeproducto: null,
 			};
-		case FILTRAR_CATEGORIA:
+		case PAGINA_SIGUIENTE:
+		case PAGINA_ANTERIOR:
 			return {
 				...state,
-				productosfiltrados: state.productos.filter(
-					(producto) => producto.categoria === action.payload
+				paginaactual: action.payload.nuevaPaginaActual,
+				productosfiltrados: state.productos.slice(
+					action.payload.desde,
+					action.payload.desde + state.productosporpagina
 				),
-			};
-		case ELIMINAR_FILTRO:
-			return {
-				...state,
-				productosfiltrados: state.productos,
 			};
 		default:
 			return state;

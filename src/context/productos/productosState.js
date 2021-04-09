@@ -18,17 +18,22 @@ import {
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
 	ACTUALIZAR_PRODUCTO_ERROR,
-	FILTRAR_CATEGORIA,
-	ELIMINAR_FILTRO
+	PAGINA_SIGUIENTE,
+	PAGINA_ANTERIOR,
 } from "../../types";
 
 const ProductoState = ({ children }) => {
 	const initialState = {
 		productos: [],
+		totalproductos: 0,
+		productosporpagina: 2,
+		cantidadpaginas: 0,
+		paginaactual: 1,
+		desde: 0,
 		productosfiltrados: [],
 		productoseleccionado: null,
 		mensajeproducto: null,
-		categorias: ["HOGAR","GOLOSINAS","PERSONALES"]
+		categorias: ["HOGAR", "GOLOSINAS", "PERSONALES"],
 	};
 
 	const [state, dispatch] = useReducer(productosReducer, initialState);
@@ -111,6 +116,10 @@ const ProductoState = ({ children }) => {
 	};
 
 	const eliminarProducto = async (_id) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
 		try {
 			const res = await axios.delete(`/api/productos/${_id}`);
 			dispatch({
@@ -129,20 +138,24 @@ const ProductoState = ({ children }) => {
 				type: LIMPIAR_MENSAJE,
 			});
 		}, 1000);
-	}
+	};
 
-	const actualizarProducto = async (datos,_id) => {
+	const actualizarProducto = async (datos, _id) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
 		try {
-			const res = await axios.put(`/api/productos/${_id}`,datos);
+			const res = await axios.put(`/api/productos/${_id}`, datos);
 			dispatch({
 				type: ACTUALIZAR_PRODUCTO_EXITO,
-				payload: {msg: res.data.msg, categoria: "success"}
-			})
+				payload: { msg: res.data.msg, categoria: "success" },
+			});
 		} catch (error) {
 			dispatch({
 				type: ACTUALIZAR_PRODUCTO_ERROR,
-				payload: {msg: error.response.data.msg, categoria: "error"}
-			})
+				payload: { msg: error.response.data.msg, categoria: "error" },
+			});
 		}
 
 		setTimeout(() => {
@@ -150,20 +163,46 @@ const ProductoState = ({ children }) => {
 				type: LIMPIAR_MENSAJE,
 			});
 		}, 1000);
-	}
+	};
 
-	const filtrarProductosCategoria = (categoria) => {
-		if (categoria === "") {
-			dispatch({
-				type: ELIMINAR_FILTRO
-			})
-		} else {
-			dispatch({
-				type: FILTRAR_CATEGORIA,
-				payload: categoria
-			})
+	const filtrarProductosCategoria = async (categoria) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
 		}
-	}
+
+		try {
+			const res = await axios.get("/api/productos/" + categoria);
+			dispatch({
+				type: OBTENER_PRODUCTOS_EXITO,
+				payload: res.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const paginaSiguiente = () => {
+		const nuevaPaginaActual = state.paginaactual + 1;
+		if (nuevaPaginaActual > state.cantidadpaginas) return;
+		const desde = (nuevaPaginaActual - 1) * state.productosporpagina;
+
+		dispatch({
+			type: PAGINA_SIGUIENTE,
+			payload: { nuevaPaginaActual, desde },
+		});
+	};
+
+	const paginaAnterior = () => {
+		const nuevaPaginaActual = state.paginaactual - 1;
+		if (nuevaPaginaActual === 0) return;
+		const desde = (nuevaPaginaActual - 1) * state.productosporpagina;
+
+		dispatch({
+			type: PAGINA_ANTERIOR,
+			payload: { nuevaPaginaActual, desde },
+		});
+	};
 
 	return (
 		<productosContext.Provider
@@ -173,12 +212,18 @@ const ProductoState = ({ children }) => {
 				productoseleccionado: state.productoseleccionado,
 				mensajeproducto: state.mensajeproducto,
 				categorias: state.categorias,
+				totalproductos: state.totalproductos,
+				productosporpagina: state.productosporpagina,
+				cantidadpaginas: state.cantidadpaginas,
+				paginaactual: state.paginaactual,
 				obtenerProductos,
 				buscarProducto,
 				nuevoProducto,
 				eliminarProducto,
 				actualizarProducto,
 				filtrarProductosCategoria,
+				paginaSiguiente,
+				paginaAnterior,
 			}}
 		>
 			{children}
