@@ -43,9 +43,10 @@ const Producto = ({ producto }) => {
 				</p>
 				<p className="my-2">Ganancias: {producto.ganancias}$</p>
 				<p className="my-2">Precio de Venta: {producto.precioVenta}$</p>
+				<p className="my-2">Disponibles: {producto.cantidad}</p>
 				{producto.imagen && (
 					<img
-						src={`http://localhost:4000/uploads/productos/${producto.imagen}`}
+						src={`${process.env.REACT_APP_BACKEND_URL}/uploads/productos/${producto.imagen}`}
 						alt="producto imagen"
 						className="w-full h-60 object-cover"
 					/>

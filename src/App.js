@@ -8,6 +8,7 @@ import Principal from "./components/Principal";
 import Productos from "./components/productos/Productos";
 import VerProducto from "./components/productos/VerProducto";
 import NuevoProducto from "./components/productos/NuevoProducto";
+import EditarProducto from "./components/productos/EditarProducto";
 
 import Usuarios from "./components/usuarios/Usuarios";
 import NuevoUsuario from "./components/usuarios/NuevoUsuario";
@@ -43,6 +44,7 @@ function App() {
                 <RutaPrivada exact path="/productos" component={Productos} />
                 <RutaPrivada exact path="/producto/:slug" component={VerProducto} />
                 <RutaPrivada exact path="/nuevo-producto" component={NuevoProducto} />
+                <RutaPrivada exact path="/producto/editar/:slug" component={EditarProducto} />
             
                 <RutaPrivada exact path="/pedidos" component={Pedidos} />
               </Switch>

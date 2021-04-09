@@ -6,7 +6,9 @@ import {
 	CREAR_PRODUCTO_EXITO,
 	CREAR_PRODUCTO_ERROR,
 	ELIMINAR_PRODUCTO_EXITO,
-	ELIMINAR_PRODUCTO_ERROR
+	ELIMINAR_PRODUCTO_ERROR,
+	ACTUALIZAR_PRODUCTO_EXITO,
+	ACTUALIZAR_PRODUCTO_ERROR
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -25,6 +27,8 @@ const productosReducer = (state, action) => {
 		case CREAR_PRODUCTO_EXITO:
 		case CREAR_PRODUCTO_ERROR:
 		case ELIMINAR_PRODUCTO_ERROR:
+		case ACTUALIZAR_PRODUCTO_EXITO:
+		case ACTUALIZAR_PRODUCTO_ERROR:
 			return {
 				...state,
 				mensajeproducto: action.payload,

@@ -16,6 +16,8 @@ import {
 	LIMPIAR_MENSAJE,
 	ELIMINAR_PRODUCTO_EXITO,
 	ELIMINAR_PRODUCTO_ERROR,
+	ACTUALIZAR_PRODUCTO_EXITO,
+	ACTUALIZAR_PRODUCTO_ERROR
 } from "../../types";
 
 const ProductoState = ({ children }) => {
@@ -117,6 +119,33 @@ const ProductoState = ({ children }) => {
 				payload: { msg: error.response.data.msg, categoria: "error" },
 			});
 		}
+
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 1000);
+	}
+
+	const actualizarProducto = async (datos,_id) => {
+		try {
+			const res = await axios.put(`/api/productos/${_id}`,datos);
+			dispatch({
+				type: ACTUALIZAR_PRODUCTO_EXITO,
+				payload: {msg: res.data.msg, categoria: "success"}
+			})
+		} catch (error) {
+			dispatch({
+				type: ACTUALIZAR_PRODUCTO_ERROR,
+				payload: {msg: error.response.data.msg, categoria: "error"}
+			})
+		}
+
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 1000);
 	}
 
 	return (
@@ -128,7 +157,8 @@ const ProductoState = ({ children }) => {
 				obtenerProductos,
 				buscarProducto,
 				nuevoProducto,
-				eliminarProducto
+				eliminarProducto,
+				actualizarProducto
 			}}
 		>
 			{children}
