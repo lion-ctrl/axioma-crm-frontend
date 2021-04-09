@@ -31,11 +31,15 @@ const EditarProducto = ({ history, match }) => {
 				}, 1000);
 			}
 		}
+		// eslint-disable-next-line
+	}, [mensajeproducto]);
+
+	useEffect(() => {
 		if (slug) {
 			buscarProducto(slug);
 		}
 		// eslint-disable-next-line
-	}, [mensajeproducto, slug]);
+	}, [slug])
 
 	// Imagen
 	const [imagen, setImagen] = useState([]);

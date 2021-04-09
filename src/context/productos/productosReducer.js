@@ -8,7 +8,9 @@ import {
 	ELIMINAR_PRODUCTO_EXITO,
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
-	ACTUALIZAR_PRODUCTO_ERROR
+	ACTUALIZAR_PRODUCTO_ERROR,
+	ELIMINAR_FILTRO,
+	FILTRAR_CATEGORIA,
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -17,6 +19,7 @@ const productosReducer = (state, action) => {
 			return {
 				...state,
 				productos: action.payload,
+				productosfiltrados: action.payload,
 			};
 		case OBTENER_PRODUCTO_EXITO:
 			return {
@@ -36,13 +39,30 @@ const productosReducer = (state, action) => {
 		case ELIMINAR_PRODUCTO_EXITO:
 			return {
 				...state,
-				productos: state.productos.filter(producto => producto._id !== action.payload._id),
-				mensajeproducto: {msg: action.payload.msg, categoria: action.payload.categoria}
-			}
+				productos: state.productos.filter(
+					(producto) => producto._id !== action.payload._id
+				),
+				mensajeproducto: {
+					msg: action.payload.msg,
+					categoria: action.payload.categoria,
+				},
+			};
 		case LIMPIAR_MENSAJE:
 			return {
 				...state,
 				mensajeproducto: null,
+			};
+		case FILTRAR_CATEGORIA:
+			return {
+				...state,
+				productosfiltrados: state.productos.filter(
+					(producto) => producto.categoria === action.payload
+				),
+			};
+		case ELIMINAR_FILTRO:
+			return {
+				...state,
+				productosfiltrados: state.productos,
 			};
 		default:
 			return state;

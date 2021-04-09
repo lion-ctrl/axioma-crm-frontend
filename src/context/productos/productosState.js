@@ -17,14 +17,18 @@ import {
 	ELIMINAR_PRODUCTO_EXITO,
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
-	ACTUALIZAR_PRODUCTO_ERROR
+	ACTUALIZAR_PRODUCTO_ERROR,
+	FILTRAR_CATEGORIA,
+	ELIMINAR_FILTRO
 } from "../../types";
 
 const ProductoState = ({ children }) => {
 	const initialState = {
 		productos: [],
+		productosfiltrados: [],
 		productoseleccionado: null,
 		mensajeproducto: null,
+		categorias: ["HOGAR","GOLOSINAS","PERSONALES"]
 	};
 
 	const [state, dispatch] = useReducer(productosReducer, initialState);
@@ -148,17 +152,33 @@ const ProductoState = ({ children }) => {
 		}, 1000);
 	}
 
+	const filtrarProductosCategoria = (categoria) => {
+		if (categoria === "") {
+			dispatch({
+				type: ELIMINAR_FILTRO
+			})
+		} else {
+			dispatch({
+				type: FILTRAR_CATEGORIA,
+				payload: categoria
+			})
+		}
+	}
+
 	return (
 		<productosContext.Provider
 			value={{
 				productos: state.productos,
+				productosfiltrados: state.productosfiltrados,
 				productoseleccionado: state.productoseleccionado,
 				mensajeproducto: state.mensajeproducto,
+				categorias: state.categorias,
 				obtenerProductos,
 				buscarProducto,
 				nuevoProducto,
 				eliminarProducto,
-				actualizarProducto
+				actualizarProducto,
+				filtrarProductosCategoria,
 			}}
 		>
 			{children}
