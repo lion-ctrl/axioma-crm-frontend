@@ -91,6 +91,13 @@ const NuevoProducto = ({ history }) => {
 	});
 	return (
 		<Layout>
+			<button
+				type="button"
+				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
+				onClick={() => history.goBack()}
+			>
+				Regresar
+			</button>
 			<h1 className="text-2xl text-gray-800 font-light">Nuevo Producto</h1>
 			<div className="flex justify-center mt-5">
 				<form
@@ -126,7 +133,7 @@ const NuevoProducto = ({ history }) => {
 							className="block text-gray-700 text-sm font-bold mb-2"
 							htmlFor="costo"
 						>
-							Precio de costo:
+							Precio de compra:
 						</label>
 						<input
 							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -173,6 +180,33 @@ const NuevoProducto = ({ history }) => {
 					<div className="mb-4">
 						<label
 							className="block text-gray-700 text-sm font-bold mb-2"
+							htmlFor="metodoContable"
+						>
+							Metodo Contable:
+						</label>
+						<select
+							name="metodoContable"
+							id="metodoContable"
+							className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
+							value={formik.values.metodoContable}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+						>
+							<option value="">-- SELECCIONE --</option>
+							<option value="CONTABLE">CONTABLE</option>
+							<option value="PESO">PESO</option>
+							<option value="LIQUIDO">LIQUIDO</option>
+						</select>
+					</div>
+					{formik.errors.metodoContable && (
+						<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+							<p className="font-bold">Error</p>
+							<p>{formik.errors.metodoContable}</p>
+						</div>
+					)}
+					<div className="mb-4">
+						<label
+							className="block text-gray-700 text-sm font-bold mb-2"
 							htmlFor="cantidad"
 						>
 							Cantidad:
@@ -197,33 +231,6 @@ const NuevoProducto = ({ history }) => {
 						<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
 							<p className="font-bold">Error</p>
 							<p>{formik.errors.cantidad}</p>
-						</div>
-					)}
-					<div className="mb-4">
-						<label
-							className="block text-gray-700 text-sm font-bold mb-2"
-							htmlFor="metodoContable"
-						>
-							Metodo Contable:
-						</label>
-						<select
-							name="metodoContable"
-							id="metodoContable"
-							className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
-							value={formik.values.metodoContable}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						>
-							<option value="">-- SELECCIONE --</option>
-							<option value="CONTABLE">CONTABLE</option>
-							<option value="PESO">PESO</option>
-							<option value="LIQUIDO">LIQUIDO</option>
-						</select>
-					</div>
-					{formik.errors.metodoContable && (
-						<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
-							<p className="font-bold">Error</p>
-							<p>{formik.errors.metodoContable}</p>
 						</div>
 					)}
 					<div className="mb-4">

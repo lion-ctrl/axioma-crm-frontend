@@ -45,17 +45,24 @@ const VerProducto = ({ match, history }) => {
 		cantidad,
 		costoTotal,
 		precioCosto,
-		imagen
+		imagen,
 	} = productoseleccionado;
 
 	const data = [{ nombre: "Ganancias", ganancias, inversion: costoTotal }];
 
 	return (
 		<Layout>
+			<button
+				type="button"
+				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
+				onClick={() => history.goBack()}
+			>
+				Regresar
+			</button>
 			<h1 className="text-2xl text-gray-800 font-light">Producto: {nombre}</h1>
 
 			<div className="mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg">
-				<div>
+				<div className="mb-20">
 					<p className="my-2">Costo: ${precioCosto}</p>
 					<p className="my-2">Precio de Venta: ${precioVenta}</p>
 					<p className="my-2">Disponibles: {cantidad}</p>
@@ -63,7 +70,7 @@ const VerProducto = ({ match, history }) => {
 						<img
 							src={`http://localhost:4000/uploads/productos/${imagen}`}
 							alt="producto imagen"
-							className="w-full max-h-full object-cover"
+							className="w-full h-80 object-cover"
 						/>
 					)}
 				</div>

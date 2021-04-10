@@ -59,34 +59,26 @@ const ProductoState = ({ children }) => {
 
 	// buscarProducto
 	const buscarProducto = async (slug) => {
-		let producto = state.productos.find((producto) => producto.slug === slug);
-		if (producto) {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.get(`/api/productos/${slug}`);
 			dispatch({
 				type: OBTENER_PRODUCTO_EXITO,
-				payload: producto,
+				payload: res.data,
 			});
-		} else {
-			const token = localStorage.getItem("token");
-			if (token) {
-				tokenAuth(token);
-			}
-			try {
-				const res = await axios.get(`/api/productos/${slug}`);
+		} catch (error) {
+			dispatch({
+				type: OBTENER_PRODUCTO_ERROR,
+				payload: { msg: error.response.data.msg, categoria: "error" },
+			});
+			setTimeout(() => {
 				dispatch({
-					type: OBTENER_PRODUCTO_EXITO,
-					payload: res.data,
+					type: LIMPIAR_MENSAJE,
 				});
-			} catch (error) {
-				dispatch({
-					type: OBTENER_PRODUCTO_ERROR,
-					payload: { msg: error.response.data.msg, categoria: "error" },
-				});
-				setTimeout(() => {
-					dispatch({
-						type: LIMPIAR_MENSAJE,
-					});
-				}, 1000);
-			}
+			}, 1000);
 		}
 	};
 
@@ -172,7 +164,7 @@ const ProductoState = ({ children }) => {
 		}
 
 		try {
-			const res = await axios.get("/api/productos/" + categoria);
+			const res = await axios.get("/api/productos/categoria/" + categoria);
 			dispatch({
 				type: OBTENER_PRODUCTOS_EXITO,
 				payload: res.data,

@@ -14,18 +14,18 @@ import Usuarios from "./components/usuarios/Usuarios";
 import NuevoUsuario from "./components/usuarios/NuevoUsuario";
 import VerUsuario from "./components/usuarios/VerUsuario";
 
-import Pedidos from "./components/pedidos/Pedidos";
+import Gastos from "./components/gastos/Gastos";
+import NuevoGasto from "./components/gastos/NuevoGasto";
 
 // Context
 import AuthState from "./context/autenticacion/authState";
 import AlertaState from "./context/alertas/alertaState";
 import UsuarioState from "./context/usuarios/usuariosState";
 import ProductoState from "./context/productos/productosState";
+import GastosState from "./context/gastos/gastosState";
 
 // Rutas
 import RutaPrivada from "./components/rutas/RutaPrivada";
-
-// TODO: Paginacion para los productos
 
 function App() {
 	return (
@@ -33,24 +33,27 @@ function App() {
 			<AlertaState>
 				<UsuarioState>
           <ProductoState>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={Login} />
-            
-                <RutaPrivada exact path="/principal" component={Principal} />
-            
-                <RutaPrivada exact path="/usuarios" component={Usuarios} />
-                <RutaPrivada exact path="/nuevo-usuario" component={NuevoUsuario} />
-                <RutaPrivada exact path="/ver-usuario/:id" component={VerUsuario} />
-            
-                <RutaPrivada exact path="/productos" component={Productos} />
-                <RutaPrivada exact path="/producto/:slug" component={VerProducto} />
-                <RutaPrivada exact path="/nuevo-producto" component={NuevoProducto} />
-                <RutaPrivada exact path="/producto/editar/:slug" component={EditarProducto} />
-            
-                <RutaPrivada exact path="/pedidos" component={Pedidos} />
-              </Switch>
-            </Router>
+            <GastosState>
+              <Router>
+                <Switch>
+                  <Route exact path="/" component={Login} />
+              
+                  <RutaPrivada exact path="/principal" component={Principal} />
+              
+                  <RutaPrivada exact path="/usuarios" component={Usuarios} />
+                  <RutaPrivada exact path="/nuevo-usuario" component={NuevoUsuario} />
+                  <RutaPrivada exact path="/ver-usuario/:id" component={VerUsuario} />
+              
+                  <RutaPrivada exact path="/productos" component={Productos} />
+                  <RutaPrivada exact path="/producto/:slug" component={VerProducto} />
+                  <RutaPrivada exact path="/nuevo-producto" component={NuevoProducto} />
+                  <RutaPrivada exact path="/producto/editar/:slug" component={EditarProducto} />
+              
+                  <RutaPrivada exact path="/gastos" component={Gastos} />
+                  <RutaPrivada exact path="/nuevo-gasto" component={NuevoGasto} />
+                </Switch>
+              </Router>
+            </GastosState>
           </ProductoState>
         </UsuarioState>
 			</AlertaState>

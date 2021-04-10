@@ -27,6 +27,7 @@ const productosReducer = (state, action) => {
 				cantidadpaginas: Math.ceil(
 					action.payload.length / state.productosporpagina
 				),
+				paginaactual: 1
 			};
 		case OBTENER_PRODUCTO_EXITO:
 			return {

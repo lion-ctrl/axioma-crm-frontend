@@ -12,7 +12,6 @@ const Productos = () => {
 	// * context
 	const {
 		obtenerProductos,
-		productos,
 		productosfiltrados,
 		categorias,
 		filtrarProductosCategoria,

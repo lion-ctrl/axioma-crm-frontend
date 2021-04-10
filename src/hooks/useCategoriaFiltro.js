@@ -5,7 +5,7 @@ const useCategoriaFiltro = (categoriasSeleccionadas) => {
 
 	const FiltroUI = () => {
 		return (
-			<form className="w-2/3">
+			<form className="w-full md:w-2/3">
 				<div>
 					<select
 						className="w-full shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none md:mr-5"
