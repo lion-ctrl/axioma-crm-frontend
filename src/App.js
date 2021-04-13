@@ -24,6 +24,8 @@ import UsuarioState from "./context/usuarios/usuariosState";
 import ProductoState from "./context/productos/productosState";
 import GastosState from "./context/gastos/gastosState";
 
+// TODO: Terminar el crear nuevo gasto
+
 // Rutas
 import RutaPrivada from "./components/rutas/RutaPrivada";
 
