@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 import gastosContext from "../../context/gastos/gastosContext";
 
@@ -8,16 +9,28 @@ import Layout from "../Layout/Layout";
 import AsignarProductos from "./AsignarProductos";
 import AsignarCantidades from "./AsignarCantidades";
 
-const NuevoGasto = () => {
+const NuevoGasto = ({ history }) => {
 	// * Context
-	const { nuevoGasto, limpiarNuevoGastosProductos } = useContext(gastosContext);
+	const { nuevoGasto, limpiarNuevoGastosProductos, mensajegasto } = useContext(
+		gastosContext
+	);
+
+	useEffect(() => {
+		if (mensajegasto) {
+			if (mensajegasto.categoria === "success") {
+				Swal.fire("Correcto", mensajegasto.msg, mensajegasto.categoria);
+				history.push("/gastos");
+			}
+		}
+		// eslint-disable-next-line
+	}, [mensajegasto]);
 
 	const formik = useFormik({
 		initialValues: {
 			tipo: "",
 			costo: 0,
 			nombre: "",
-			pago: "",
+			metodo: "",
 		},
 		validationSchema: Yup.object({
 			tipo: Yup.string().required("Debes seleccionar una opcion"),
@@ -25,7 +38,7 @@ const NuevoGasto = () => {
 				.required("El monto del gasto es obligatorio")
 				.positive("No puedes ingresar numeros negativos"),
 			nombre: Yup.string().required("Debes identificar el gasto"),
-			pago: Yup.string().required("Debes identificar el tipo de pago"),
+			metodo: Yup.string().required("Debes identificar el método de pago"),
 		}),
 		onSubmit: (datos) => {
 			nuevoGasto(datos);
@@ -76,7 +89,7 @@ const NuevoGasto = () => {
 							</p>
 						</div>
 					)}
-					{ <AsignarProductos tipo={formik.values.tipo} />}
+					{<AsignarProductos tipo={formik.values.tipo} />}
 					{formik.values.tipo === "PEDIDO" && <AsignarCantidades />}
 					<div className="mb-4">
 						<label
@@ -135,15 +148,15 @@ const NuevoGasto = () => {
 					<div className="mb-4">
 						<label
 							className="block text-gray-700 text-sm font-bold mb-2"
-							htmlFor="pago"
+							htmlFor="metodo"
 						>
 							Método de pago:
 						</label>
 						<select
-							name="pago"
-							id="pago"
+							name="metodo"
+							id="metodo"
 							className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
-							value={formik.values.pago}
+							value={formik.values.metodo}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						>
@@ -153,11 +166,11 @@ const NuevoGasto = () => {
 							<option value="TRANSFERENCIA">TRANSFERENCIA</option>
 						</select>
 					</div>
-					{formik.errors.pago && (
+					{formik.errors.metodo && (
 						<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-2">
 							<p>
 								{" "}
-								<span className="font-bold">Error:</span> {formik.errors.pago}
+								<span className="font-bold">Error:</span> {formik.errors.metodo}
 							</p>
 						</div>
 					)}

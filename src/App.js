@@ -16,6 +16,8 @@ import VerUsuario from "./components/usuarios/VerUsuario";
 
 import Gastos from "./components/gastos/Gastos";
 import NuevoGasto from "./components/gastos/NuevoGasto";
+import VerGasto from "./components/gastos/VerGasto";
+import EditarGasto from "./components/gastos/EditarGasto";
 
 // Context
 import AuthState from "./context/autenticacion/authState";
@@ -23,8 +25,6 @@ import AlertaState from "./context/alertas/alertaState";
 import UsuarioState from "./context/usuarios/usuariosState";
 import ProductoState from "./context/productos/productosState";
 import GastosState from "./context/gastos/gastosState";
-
-// TODO: Terminar el crear nuevo gasto
 
 // Rutas
 import RutaPrivada from "./components/rutas/RutaPrivada";
@@ -53,6 +53,8 @@ function App() {
               
                   <RutaPrivada exact path="/gastos" component={Gastos} />
                   <RutaPrivada exact path="/nuevo-gasto" component={NuevoGasto} />
+                  <RutaPrivada exact path="/gasto/:id" component={VerGasto} />
+                  <RutaPrivada exact path="/gasto/editar/:id" component={EditarGasto} />
                 </Switch>
               </Router>
             </GastosState>

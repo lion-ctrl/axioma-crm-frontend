@@ -38,7 +38,7 @@ const Sidebar = () => {
 				</li>
 				<li
 					className={
-						history.location.pathname === "/pedidos" ? "bg-blue-800 p-2" : "p-2"
+						history.location.pathname === "/gastos" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
 					<Link to={"/gastos"} className="text-white mb-2 block">

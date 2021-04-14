@@ -28,7 +28,7 @@ const Producto = ({ producto }) => {
 			cancelButtonColor: "#3f3434",
 			confirmButtonText: "Si, Eliminar",
 			cancelButtonText: "No, Cancelar",
-		}).then(async (result) => {
+		}).then((result) => {
 			if (result.isConfirmed) {
 				eliminarProducto(_id);
 			}
