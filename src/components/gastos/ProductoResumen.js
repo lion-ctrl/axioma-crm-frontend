@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-const ProductoResumen = ({ producto, cantidadProductos }) => {
-	const { nombre } = producto;
+const ProductoResumen = ({ producto, cantidadProductos,actualizarTotal }) => {
+	const { nombre, precioCosto } = producto;
+	const resumenAnterior = {}
+	if (producto.resumen) {
+		resumenAnterior.cantidad = producto.resumen.cantidad;
+		resumenAnterior.precio = producto.resumen.precio;
+	} else {
+		resumenAnterior.cantidad = 0;
+		resumenAnterior.precio = precioCosto;
+	}
 	const [error, setError] = useState("");
-	const [resumen, setResumen] = useState({
-		cantidad: 0,
-		precio: 0,
-	});
+	const [resumen, setResumen] = useState(resumenAnterior);
 
 	useEffect(() => {
 		if (resumen.cantidad > 0 && resumen.precio > 0) {
 			cantidadProductos({ ...producto, resumen });
-			// actualizarTotal();
+			actualizarTotal();
 			setError("");
 		} else {
 			setError("No puedes ingresar una cantidad o un precio negativo");
@@ -32,7 +37,7 @@ const ProductoResumen = ({ producto, cantidadProductos }) => {
 				<div className="md:w-2/4 mb-2 md:mb-0">
 					<p className="text-gray-700 text-sm font-bold">Producto: {nombre}</p>
 				</div>
-				<div className="mb-4">
+				<div className="mb-4 md:mr-2">
 					<label
 						className="block text-gray-700 text-sm font-bold mb-2"
 						htmlFor="monto"
@@ -45,7 +50,7 @@ const ProductoResumen = ({ producto, cantidadProductos }) => {
 						name="cantidad"
 						step="0.1"
 						value={resumen.cantidad}
-						className="shadow apperance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline md:ml-4"
+						className="shadow apperance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						onChange={handleChange}
 					/>
 				</div>
@@ -62,7 +67,7 @@ const ProductoResumen = ({ producto, cantidadProductos }) => {
 						name="precio"
 						step="0.1"
 						value={resumen.precio}
-						className="md:mt-0 shadow apperance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline md:ml-4"
+						className="md:mt-0 shadow apperance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						onChange={handleChange}
 					/>
 				</div>

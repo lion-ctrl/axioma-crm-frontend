@@ -4,21 +4,40 @@ import gastoContext from "../../context/gastos/gastosContext";
 
 import Layout from "../Layout/Layout";
 
-const VerGasto = ({ match }) => {
+const VerGasto = ({ match, history }) => {
 	const { id } = match.params;
 
 	// context
-	const { obtenerGasto, gastoseleccionado } = useContext(gastoContext);
+	const { obtenerGasto, gastoseleccionado, mensajegasto } = useContext(
+		gastoContext
+	);
 
 	useEffect(() => {
 		obtenerGasto(id);
+		// eslint-disable-next-line
 	}, [id]);
+
+	useEffect(() => {
+		if (mensajegasto) {
+			if (mensajegasto.categoria === "error") {
+				history.push("/gastos");
+			}
+		}
+		// eslint-disable-next-line
+	}, [mensajegasto]);
 
 	if (!gastoseleccionado) return "Cargando...";
 
 	const { nombre, creado, tipo, costo, metodo, productos } = gastoseleccionado;
 	return (
 		<Layout>
+			<button
+				type="button"
+				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
+				onClick={() => history.goBack()}
+			>
+				Regresar
+			</button>
 			<h1 className="text-2xl text-gray-800 font-light">Gasto: {nombre}</h1>
 
 			<div className="mt-4 bg-white rounded p-6 w-full max-w-lg mx-auto shadow-lg">

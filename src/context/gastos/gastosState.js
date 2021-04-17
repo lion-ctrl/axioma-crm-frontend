@@ -15,7 +15,10 @@ import {
 	ELIMINAR_GASTO_EXITO,
 	LIMPIAR_MENSAJE,
 	NUEVO_GASTO_EXITO,
-	OBTENER_GASTO_EXITO
+	NUEVO_GASTO_TOTAL,
+	OBTENER_GASTO_EXITO,
+	OBTENER_GASTO_ERROR,
+	EDITAR_GASTO_EXITO,
 } from "../../types";
 
 const GastosState = ({ children }) => {
@@ -23,6 +26,7 @@ const GastosState = ({ children }) => {
 		gastos: [],
 		nuevogasto: null,
 		nuevogastoproductos: [],
+		totalgasto: 0,
 		gastoseleccionado: null,
 		mensajegasto: null,
 	};
@@ -69,7 +73,19 @@ const GastosState = ({ children }) => {
 	};
 
 	const nuevoGasto = async (datos) => {
+		if (datos.tipo === "PEDIDO") {
+			if (!state.nuevogastoproductos.length) {
+				Swal.fire("Error", "Debes indicar los productos del pedido", "error");
+				return;
+			}
+		}
 		if (state.nuevogastoproductos.length) {
+			let res = state.nuevogastoproductos.every((producto) =>
+				producto.hasOwnProperty("resumen")
+			);
+			if (!res) {
+				return;
+			}
 			datos.productos = state.nuevogastoproductos;
 		}
 		try {
@@ -81,7 +97,7 @@ const GastosState = ({ children }) => {
 			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: NUEVO_GASTO_EXITO,
-				payload: {categoria: "success"}
+				payload: { categoria: "success" },
 			});
 		} catch (error) {
 			Swal.fire("Error", error.response.data.msg, "error");
@@ -91,6 +107,12 @@ const GastosState = ({ children }) => {
 				type: LIMPIAR_MENSAJE,
 			});
 		}, 3000);
+	};
+
+	const actualizarTotal = () => {
+		dispatch({
+			type: NUEVO_GASTO_TOTAL,
+		});
 	};
 
 	const mostrarGastos = async () => {
@@ -105,7 +127,7 @@ const GastosState = ({ children }) => {
 				payload: res.data,
 			});
 		} catch (error) {
-			Swal.fire("Error",error.response.data.msg);
+			Swal.fire("Error", error.response.data.msg);
 		}
 	};
 
@@ -116,18 +138,31 @@ const GastosState = ({ children }) => {
 				tokenAuth(token);
 			}
 			const res = await axios.get(`/api/gastos/${_id}`);
-			console.log(res);
 			dispatch({
 				type: OBTENER_GASTO_EXITO,
 				payload: res.data,
 			});
 		} catch (error) {
-			Swal.fire("Error",error.response.data.msg,"error");
+			Swal.fire("Error", error.response.data.msg, "error");
+			dispatch({
+				type: OBTENER_GASTO_ERROR,
+				payload: { categoria: "error" },
+			});
 		}
-	}
+
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 3000);
+	};
 
 	const eliminarGasto = async (_id) => {
 		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				tokenAuth(token);
+			}
 			const res = await axios.delete(`/api/gastos/${_id}`);
 			Swal.fire("Correcto", "Gasto Eliminado", "success");
 			dispatch({
@@ -139,12 +174,38 @@ const GastosState = ({ children }) => {
 		}
 	};
 
+	const editarGasto = async (_id, datos) => {
+		if (state.nuevogastoproductos.length) {
+			datos.productos = state.nuevogastoproductos;
+		}
+		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				tokenAuth(token);
+			}
+			const res = await axios.put(`/api/gastos/${_id}`, datos);
+			Swal.fire("Correcto", res.data.msg, "success");
+			dispatch({
+				type: EDITAR_GASTO_EXITO,
+				payload: { categoria: "success" },
+			});
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 3000);
+	};
+
 	return (
 		<gastosContext.Provider
 			value={{
 				gastos: state.gastos,
 				nuevogasto: state.nuevogasto,
 				nuevogastoproductos: state.nuevogastoproductos,
+				totalgasto: state.totalgasto,
 				gastoseleccionado: state.gastoseleccionado,
 				mensajegasto: state.mensajegasto,
 				agregarProductos,
@@ -153,7 +214,9 @@ const GastosState = ({ children }) => {
 				nuevoGasto,
 				mostrarGastos,
 				eliminarGasto,
-				obtenerGasto
+				obtenerGasto,
+				editarGasto,
+				actualizarTotal,
 			}}
 		>
 			{children}

@@ -6,7 +6,7 @@ import gastosContext from "../../context/gastos/gastosContext";
 import axios from "../../config/clienteAxios";
 import tokenAuth from "../../config/tokenAuth";
 
-const AsignarProductos = ({tipo}) => {
+const AsignarProductos = ({tipo,productosAnteriores}) => {
     const [productos,setProductos] = useState([]);
 
     // * context
@@ -26,10 +26,15 @@ const AsignarProductos = ({tipo}) => {
 			}
 		};
 		buscarProductos();
+
+		if (productosAnteriores) {
+			agregarProductos(productosAnteriores)
+		}
+		// eslint-disable-next-line
 	}, []);
 
     const seleccionarProductos = (productos) => {
-        agregarProductos(productos);
+			agregarProductos(productos);
     }
 
 	if (tipo !== "PEDIDO") return null;
@@ -43,10 +48,11 @@ const AsignarProductos = ({tipo}) => {
 				className="mt-2"
 				options={productos}
 				isMulti
+				defaultValue={productosAnteriores && productosAnteriores}
 				onChange={seleccionarProductos}
 				getOptionValue={(opciones) => opciones._id}
 				getOptionLabel={(opciones) =>
-					`${opciones.nombre} - ${opciones.cantidad} Disponibles`
+					`${opciones.nombre}`
 				}
 				placeholder="Busque o seleccione los productos"
 				noOptionsMessage={() => "No hay resultados"}

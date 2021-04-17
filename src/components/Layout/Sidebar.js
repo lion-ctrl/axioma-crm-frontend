@@ -14,7 +14,7 @@ const Sidebar = () => {
 						history.location.pathname === "/principal" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
-					<Link to={"/principal"} className="text-white mb-2 block">
+					<Link to={"/principal"} className="text-white block">
 						Panel Principal
 					</Link>
 				</li>
@@ -23,7 +23,7 @@ const Sidebar = () => {
 						history.location.pathname === "/usuarios" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
-					<Link to={"/usuarios"} className="text-white mb-2 block">
+					<Link to={"/usuarios"} className="text-white block">
 						Usuarios
 					</Link>
 				</li>
@@ -32,7 +32,7 @@ const Sidebar = () => {
 						history.location.pathname === "/productos" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
-					<Link to={"/productos"} className="text-white mb-2 block">
+					<Link to={"/productos"} className="text-white block">
 						Productos
 					</Link>
 				</li>
@@ -41,7 +41,7 @@ const Sidebar = () => {
 						history.location.pathname === "/gastos" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
-					<Link to={"/gastos"} className="text-white mb-2 block">
+					<Link to={"/gastos"} className="text-white block">
 						Gastos
 					</Link>
 				</li>

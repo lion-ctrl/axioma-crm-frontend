@@ -4,10 +4,11 @@ import gastosContext from "../../context/gastos/gastosContext";
 
 import ProductoResumen from "./ProductoResumen";
 
-const AsignarCantidades = () => {
+const AsignarCantidades = ({tipo}) => {
 	// * context
-	const { nuevogastoproductos, cantidadProductos } = useContext(gastosContext);
+	const { nuevogastoproductos, cantidadProductos, actualizarTotal } = useContext(gastosContext);
 
+	if (tipo !== "PEDIDO") return null;
     if (!nuevogastoproductos) return null;
 
 	return (
@@ -18,6 +19,7 @@ const AsignarCantidades = () => {
 						producto={producto}
 						key={producto._id}
 						cantidadProductos={cantidadProductos}
+						actualizarTotal={actualizarTotal}
 					/>
 				))
 			) : (

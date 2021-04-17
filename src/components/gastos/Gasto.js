@@ -55,7 +55,7 @@ const Gasto = ({ gasto }) => {
 					to={`/gasto/editar/${gasto._id}`}
 					className="flex items-center justify-center mt-4 bg-green-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
 				>
-					Actualizar Gasto{" "}
+					Editar Gasto{" "}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-5 w-5"

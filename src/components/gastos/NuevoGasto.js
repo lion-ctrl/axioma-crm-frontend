@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 
 import gastosContext from "../../context/gastos/gastosContext";
 
@@ -11,14 +10,13 @@ import AsignarCantidades from "./AsignarCantidades";
 
 const NuevoGasto = ({ history }) => {
 	// * Context
-	const { nuevoGasto, limpiarNuevoGastosProductos, mensajegasto } = useContext(
+	const { nuevoGasto, limpiarNuevoGastosProductos, mensajegasto, totalgasto } = useContext(
 		gastosContext
 	);
 
 	useEffect(() => {
 		if (mensajegasto) {
 			if (mensajegasto.categoria === "success") {
-				Swal.fire("Correcto", mensajegasto.msg, mensajegasto.categoria);
 				history.push("/gastos");
 			}
 		}
@@ -28,7 +26,7 @@ const NuevoGasto = ({ history }) => {
 	const formik = useFormik({
 		initialValues: {
 			tipo: "",
-			costo: 0,
+			costo: totalgasto,
 			nombre: "",
 			metodo: "",
 		},
@@ -54,6 +52,13 @@ const NuevoGasto = ({ history }) => {
 
 	return (
 		<Layout>
+			<button
+				type="button"
+				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
+				onClick={() => history.goBack()}
+			>
+				Regresar
+			</button>
 			<h1 className="text-2xl text-gray-800 font-light">Nuevo Gasto</h1>
 
 			<div className="flex justify-center mt-5">
@@ -90,7 +95,7 @@ const NuevoGasto = ({ history }) => {
 						</div>
 					)}
 					{<AsignarProductos tipo={formik.values.tipo} />}
-					{formik.values.tipo === "PEDIDO" && <AsignarCantidades />}
+					{<AsignarCantidades tipo={formik.values.tipo} />}
 					<div className="mb-4">
 						<label
 							className="block text-gray-700 text-sm font-bold mb-2"
@@ -111,11 +116,11 @@ const NuevoGasto = ({ history }) => {
 							onBlur={formik.handleBlur}
 						/>
 					</div>
-					{formik.errors.monto && (
+					{formik.errors.costo && (
 						<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-2">
 							<p>
 								{" "}
-								<span className="font-bold">Error:</span> {formik.errors.monto}
+								<span className="font-bold">Error:</span> {formik.errors.costo}
 							</p>
 						</div>
 					)}

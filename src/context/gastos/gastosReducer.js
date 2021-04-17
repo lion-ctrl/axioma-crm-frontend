@@ -6,7 +6,10 @@ import {
 	ELIMINAR_GASTO_EXITO,
 	LIMPIAR_MENSAJE,
 	NUEVO_GASTO_EXITO,
-	OBTENER_GASTO_EXITO
+	NUEVO_GASTO_TOTAL,
+	OBTENER_GASTO_EXITO,
+	OBTENER_GASTO_ERROR,
+	EDITAR_GASTO_EXITO,
 } from "../../types";
 
 const gastosReducer = (state, action) => {
@@ -27,21 +30,38 @@ const gastosReducer = (state, action) => {
 			return {
 				...state,
 				nuevogastoproductos: [],
+				totalgasto: 0
 			};
 		case OBTENER_GASTOS_EXITO:
 			return {
 				...state,
 				gastos: action.payload,
+				gastoseleccionado: null,
+				nuevogastoproductos: [],
+				totalgasto: 0
 			};
 		case OBTENER_GASTO_EXITO:
 			return {
 				...state,
-				gastoseleccionado: action.payload
-			}
+				gastoseleccionado: action.payload,
+			};
 		case NUEVO_GASTO_EXITO:
+		case OBTENER_GASTO_ERROR:
+		case EDITAR_GASTO_EXITO:
 			return {
 				...state,
 				mensajegasto: action.payload,
+			};
+		case NUEVO_GASTO_TOTAL:
+			return {
+				...state,
+				totalgasto: state.nuevogastoproductos
+					.filter((producto) => producto.resumen !== undefined)
+					.reduce(
+						(acc, producto) =>
+							(acc += producto.resumen.precio * producto.resumen.cantidad),
+						0
+					),
 			};
 		case LIMPIAR_MENSAJE:
 			return {
