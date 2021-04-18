@@ -5,6 +5,7 @@ import gastosContext from "../../context/gastos/gastosContext";
 
 import Layout from "../Layout/Layout";
 import Gasto from "./Gasto"
+import UseGastosFiltro from "../../hooks/GastosFiltro";
 
 const Pedidos = () => {
 	// context
@@ -25,12 +26,14 @@ const Pedidos = () => {
 				Nuevo Gasto
 			</Link>
 
+			<UseGastosFiltro/>
+
 			{gastos.length ? (
 				gastos.map((gasto) => (
 					<Gasto key={gasto._id} gasto={gasto} />
 				))
 			) : (
-				<p className="mt-5 text-center text-2xl">No hay Gastos</p>
+				<p className="my-5 text-center text-2xl">No hay Gastos</p>
 			)}
 		</Layout>
 	);

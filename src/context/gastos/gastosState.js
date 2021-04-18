@@ -199,6 +199,23 @@ const GastosState = ({ children }) => {
 		}, 3000);
 	};
 
+	const filtrarGastos = async (datos) => {
+		const {fechai,fechaf} = datos;
+		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				tokenAuth(token);
+			}
+			const res = await axios.get(`/api/gastos/fecha?fechai=${fechai}&fechaf=${fechaf}`);
+			dispatch({
+				type: OBTENER_GASTOS_EXITO,
+				payload: res.data,
+			});
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
+
 	return (
 		<gastosContext.Provider
 			value={{
@@ -217,6 +234,7 @@ const GastosState = ({ children }) => {
 				obtenerGasto,
 				editarGasto,
 				actualizarTotal,
+				filtrarGastos
 			}}
 		>
 			{children}

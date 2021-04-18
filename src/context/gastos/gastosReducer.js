@@ -61,7 +61,7 @@ const gastosReducer = (state, action) => {
 						(acc, producto) =>
 							(acc += producto.resumen.precio * producto.resumen.cantidad),
 						0
-					),
+					).toFixed(2),
 			};
 		case LIMPIAR_MENSAJE:
 			return {

@@ -42,7 +42,7 @@ const VerGasto = ({ match, history }) => {
 
 			<div className="mt-4 bg-white rounded p-6 w-full max-w-lg mx-auto shadow-lg">
 				<div className="mb-20">
-					<p className="my-2">Fecha: {creado}</p>
+					<p className="my-2">Fecha: {creado.split("T")[0].split("-").reverse().join("-")}</p>
 					<p className="my-2">Tipo de Gasto: {tipo}</p>
 					<p className="my-2">Método de pago: {metodo}</p>
 					<p className="my-2">Total: ${costo}</p>

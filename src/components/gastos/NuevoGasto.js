@@ -10,23 +10,17 @@ import AsignarCantidades from "./AsignarCantidades";
 
 const NuevoGasto = ({ history }) => {
 	// * Context
-	const { nuevoGasto, limpiarNuevoGastosProductos, mensajegasto, totalgasto } = useContext(
-		gastosContext
-	);
-
-	useEffect(() => {
-		if (mensajegasto) {
-			if (mensajegasto.categoria === "success") {
-				history.push("/gastos");
-			}
-		}
-		// eslint-disable-next-line
-	}, [mensajegasto]);
+	const {
+		nuevoGasto,
+		limpiarNuevoGastosProductos,
+		mensajegasto,
+		totalgasto,
+	} = useContext(gastosContext);
 
 	const formik = useFormik({
 		initialValues: {
 			tipo: "",
-			costo: totalgasto,
+			costo: 0,
 			nombre: "",
 			metodo: "",
 		},
@@ -49,6 +43,15 @@ const NuevoGasto = ({ history }) => {
 		}
 		// eslint-disable-next-line
 	}, [formik.values.tipo]);
+
+	useEffect(() => {
+		if (mensajegasto) {
+			if (mensajegasto.categoria === "success") {
+				history.push("/gastos");
+			}
+		}
+		// eslint-disable-next-line
+	}, [mensajegasto]);
 
 	return (
 		<Layout>
@@ -96,12 +99,21 @@ const NuevoGasto = ({ history }) => {
 					)}
 					{<AsignarProductos tipo={formik.values.tipo} />}
 					{<AsignarCantidades tipo={formik.values.tipo} />}
+					{formik.values.tipo === "PEDIDO" && (
+						<div className="flex items-center my-4 justify-between bg-white p-3">
+							<h2 className="text-gray-800 text-lg">
+								Total a pagar en productos:
+							</h2>
+							<p className="text-gray-800 mt-0">${totalgasto}</p>
+						</div>
+					)}
+
 					<div className="mb-4">
 						<label
 							className="block text-gray-700 text-sm font-bold mb-2"
 							htmlFor="costo"
 						>
-							Monto del gasto:
+							Monto total del gasto:
 						</label>
 						<input
 							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

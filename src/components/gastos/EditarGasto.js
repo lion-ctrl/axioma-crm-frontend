@@ -14,7 +14,8 @@ const EditarGasto = ({ history, match }) => {
 		obtenerGasto,
 		gastoseleccionado,
 		mensajegasto,
-		editarGasto
+		editarGasto,
+		totalgasto
 	} = useContext(gastosContext);
 
 	const { id } = match.params;
@@ -26,7 +27,10 @@ const EditarGasto = ({ history, match }) => {
 
 	useEffect(() => {
 		if (mensajegasto) {
-			if (mensajegasto.categoria === "error" || mensajegasto.categoria === "success") {
+			if (
+				mensajegasto.categoria === "error" ||
+				mensajegasto.categoria === "success"
+			) {
 				history.push("/gastos");
 			}
 		}
@@ -54,7 +58,7 @@ const EditarGasto = ({ history, match }) => {
 	});
 
 	const handleSubmit = (datos) => {
-		editarGasto(_id,datos);
+		editarGasto(_id, datos);
 	};
 
 	return (
@@ -66,7 +70,7 @@ const EditarGasto = ({ history, match }) => {
 			>
 				Regresar
 			</button>
-			
+
 			<h1 className="text-2xl text-gray-800 font-light">
 				Editar Gasto: {nombre}
 			</h1>
@@ -120,6 +124,14 @@ const EditarGasto = ({ history, match }) => {
 									/>
 								}
 								{<AsignarCantidades tipo={props.values.tipo} />}
+								{props.values.tipo === "PEDIDO" && (
+									<div className="flex items-center my-4 justify-between bg-white p-3">
+										<h2 className="text-gray-800 text-lg">
+											Total a pagar en productos:
+										</h2>
+										<p className="text-gray-800 mt-0">${totalgasto}</p>
+									</div>
+								)}
 								<div className="mb-4">
 									<label
 										className="block text-gray-700 text-sm font-bold mb-2"

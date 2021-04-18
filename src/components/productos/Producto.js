@@ -77,7 +77,7 @@ const Producto = ({ producto }) => {
 					to={`/producto/editar/${producto.slug}`}
 					className="flex items-center justify-center mt-4 bg-green-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
 				>
-					Actualizar Producto{" "}
+					Editar Producto{" "}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-5 w-5"
