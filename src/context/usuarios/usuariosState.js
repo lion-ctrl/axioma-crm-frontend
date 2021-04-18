@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import Swal from "sweetalert2";
 
 import usuariosContext from "./usuariosContext";
 import usuariosReducer from "./usuariosReducer";
@@ -6,10 +7,8 @@ import usuariosReducer from "./usuariosReducer";
 import {
 	OBTENER_USUARIOS,
 	REGISTRAR_USUARIO_EXITO,
-	REGISTRAR_USUARIO_ERROR,
 	LIMPIAR_MENSAJE,
 	ELIMINAR_USUARIO_EXITO,
-	ELIMINAR_USUARIO_ERROR,
 	OBTENER_USUARIO_EXITO,
 	OBTENER_USUARIO_ERROR,
 } from "../../types";
@@ -41,7 +40,7 @@ const UsuariosState = ({ children }) => {
 				payload: empleados.data,
 			});
 		} catch (error) {
-			console.log(error);
+			Swal.fire("Error",error.response.data.msg,"error");
 		}
 	};
 
@@ -54,15 +53,13 @@ const UsuariosState = ({ children }) => {
 
 		try {
 			const res = await axios.post("/api/auth/nuevo-usuario", datos);
+			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: REGISTRAR_USUARIO_EXITO,
-				payload: { msg: res.data.msg, categoria: "success" },
+				payload: {categoria: "success"},
 			});
 		} catch (error) {
-			dispatch({
-				type: REGISTRAR_USUARIO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
-			});
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
 		setTimeout(() => {
 			dispatch({
@@ -75,21 +72,14 @@ const UsuariosState = ({ children }) => {
 	const eliminarUsuario = async (_id) => {
 		try {
 			const res = await axios.delete(`/api/usuarios/${_id}`);
+			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: ELIMINAR_USUARIO_EXITO,
 				payload: res.data,
 			});
 		} catch (error) {
-			dispatch({
-				type: ELIMINAR_USUARIO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
-			});
+			Swal.fire("Error", error.response.data.msg, "success");
 		}
-		setTimeout(() => {
-			dispatch({
-				type: LIMPIAR_MENSAJE,
-			});
-		}, 1000);
 	};
 
 	// Ver usuario
@@ -105,9 +95,10 @@ const UsuariosState = ({ children }) => {
 					payload: usuario.data,
 				});
 			} catch (error) {
+				Swal.fire("Error", error.response.data.msg, "error");
 				dispatch({
 					type: OBTENER_USUARIO_ERROR,
-					payload: { msg: error.response.data.msg, categoria: "error" },
+					payload: { categoria: "error" },
 				});
 
 				setTimeout(() => {

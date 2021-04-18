@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 
 import usuariosContext from "../../context/usuarios/usuariosContext";
 
@@ -13,7 +12,6 @@ const Usuarios = () => {
 		obtenerUsuarios,
 		usuarios,
 		eliminarUsuario,
-		mensajeusuario,
 	} = useContext(usuariosContext);
 
 	useEffect(() => {
@@ -21,15 +19,6 @@ const Usuarios = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	useEffect(() => {
-		if (mensajeusuario) {
-			if (mensajeusuario.categoria === "error") {
-				Swal.fire("Error", mensajeusuario.msg, mensajeusuario.categoria);
-			} else {
-				Swal.fire("Correcto", mensajeusuario.msg, mensajeusuario.categoria);
-			}
-		}
-	}, [mensajeusuario]);
 	return (
 		<Layout>
 			<h1 className="text-2xl text-gray-800 font-light">Usuarios</h1>

@@ -1,9 +1,7 @@
 import {
 	OBTENER_USUARIOS,
 	REGISTRAR_USUARIO_EXITO,
-	REGISTRAR_USUARIO_ERROR,
 	ELIMINAR_USUARIO_EXITO,
-    ELIMINAR_USUARIO_ERROR,
 	LIMPIAR_MENSAJE,
     OBTENER_USUARIO_EXITO,
     OBTENER_USUARIO_ERROR
@@ -15,10 +13,9 @@ const usuariosReducer = (state, action) => {
 			return {
 				...state,
 				usuarios: action.payload,
+				usuarioseleccionado: null
 			};
 		case REGISTRAR_USUARIO_EXITO:
-		case REGISTRAR_USUARIO_ERROR:
-        case ELIMINAR_USUARIO_ERROR:
         case OBTENER_USUARIO_ERROR:
 			return {
 				...state,
@@ -27,7 +24,6 @@ const usuariosReducer = (state, action) => {
 		case ELIMINAR_USUARIO_EXITO:
 			return {
 				...state,
-				mensajeusuario: { msg: action.payload.msg, categoria: "success" },
 				usuarios: state.usuarios.filter(
 					(usuario) => usuario._id !== action.payload._id
 				),

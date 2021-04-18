@@ -1,11 +1,10 @@
 import React, { useEffect, useContext } from "react";
-import Swal from "sweetalert2";
 
 import usuariosContext from "../../context/usuarios/usuariosContext";
 
 import Layout from "../Layout/Layout";
 
-const VerUsuario = ({ match }) => {
+const VerUsuario = ({ match, history }) => {
 	// _id
 	const { id } = match.params;
 	// Context
@@ -25,9 +24,10 @@ const VerUsuario = ({ match }) => {
 	useEffect(() => {
 		if (mensajeusuario) {
 			if (mensajeusuario.categoria === "error") {
-				Swal.fire("Error", mensajeusuario.msg, mensajeusuario.categoria);
+				history.push("/usuarios");
 			}
 		}
+		// eslint-disable-next-line
 	}, [mensajeusuario]);
 
 	if (!usuarioseleccionado) return null;

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 
 import usuariosContext from "../../context/usuarios/usuariosContext";
@@ -17,17 +16,11 @@ const NuevoUsuario = () => {
 
 	useEffect(() => {
 		if (mensajeusuario) {
-			if (mensajeusuario.categoria === "error") {
-				Swal.fire("Error", mensajeusuario.msg, mensajeusuario.categoria);
-			} else {
-				Swal.fire("Correcto", mensajeusuario.msg, mensajeusuario.categoria);
-
-				setTimeout(() => {
-					history.push("/usuarios");
-				}, 1000);
+			if (mensajeusuario.categoria === "success") {
+				history.push("/usuarios");
 			}
 		}
-        // eslint-disable-next-line
+		// eslint-disable-next-line
 	}, [mensajeusuario]);
 
 	// validacion
@@ -45,7 +38,9 @@ const NuevoUsuario = () => {
 			email: Yup.string()
 				.email("Debes ingresar un email valido")
 				.required("El Email es obligatorio"),
-			password: Yup.string().required("La contraseña es obligatoria"),
+			password: Yup.string()
+				.required("La contraseña es obligatoria")
+				.min(6, "Debe contener al menos 6 caracteres"),
 			rol: Yup.string().required(
 				"Debes ingresar un rol que identifique al usuario"
 			),
