@@ -1,22 +1,13 @@
-import React,{useContext,useEffect} from "react";
+import React,{useContext} from "react";
 import { Link } from "react-router-dom";
-import productosContext from "../../context/productos/productosContext";
 import Swal from "sweetalert2";
+
+import productosContext from "../../context/productos/productosContext";
 
 const Producto = ({ producto }) => {
 
 	// * Context
-	const {eliminarProducto,mensajeproducto} = useContext(productosContext);
-
-	useEffect(() => {
-		if (mensajeproducto) {
-			if (mensajeproducto.categoria === "error") {
-				Swal.fire("Error",mensajeproducto.msg,mensajeproducto.categoria);
-			} else {
-				Swal.fire("Eliminado",mensajeproducto.msg,mensajeproducto.categoria);
-			}
-		}
-	}, [mensajeproducto])
+	const {eliminarProducto} = useContext(productosContext);
 
 	const eliminarProductoClick = (_id) => {
 		Swal.fire({

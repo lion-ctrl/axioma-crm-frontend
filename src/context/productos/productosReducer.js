@@ -4,11 +4,9 @@ import {
 	OBTENER_PRODUCTO_EXITO,
 	OBTENER_PRODUCTO_ERROR,
 	CREAR_PRODUCTO_EXITO,
-	CREAR_PRODUCTO_ERROR,
 	ELIMINAR_PRODUCTO_EXITO,
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
-	ACTUALIZAR_PRODUCTO_ERROR,
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
 } from "../../types";
@@ -27,7 +25,8 @@ const productosReducer = (state, action) => {
 				cantidadpaginas: Math.ceil(
 					action.payload.length / state.productosporpagina
 				),
-				paginaactual: 1
+				paginaactual: 1,
+				productoseleccionado: null
 			};
 		case OBTENER_PRODUCTO_EXITO:
 			return {
@@ -36,10 +35,8 @@ const productosReducer = (state, action) => {
 			};
 		case OBTENER_PRODUCTO_ERROR:
 		case CREAR_PRODUCTO_EXITO:
-		case CREAR_PRODUCTO_ERROR:
 		case ELIMINAR_PRODUCTO_ERROR:
 		case ACTUALIZAR_PRODUCTO_EXITO:
-		case ACTUALIZAR_PRODUCTO_ERROR:
 			return {
 				...state,
 				mensajeproducto: action.payload,

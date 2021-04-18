@@ -12,12 +12,10 @@ import {
 	OBTENER_PRODUCTO_ERROR,
 	OBTENER_PRODUCTO_EXITO,
 	CREAR_PRODUCTO_EXITO,
-	CREAR_PRODUCTO_ERROR,
 	LIMPIAR_MENSAJE,
 	ELIMINAR_PRODUCTO_EXITO,
 	ELIMINAR_PRODUCTO_ERROR,
 	ACTUALIZAR_PRODUCTO_EXITO,
-	ACTUALIZAR_PRODUCTO_ERROR,
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
 } from "../../types";
@@ -70,9 +68,10 @@ const ProductoState = ({ children }) => {
 				payload: res.data,
 			});
 		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
 			dispatch({
 				type: OBTENER_PRODUCTO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
+				payload: { categoria: "error" },
 			});
 			setTimeout(() => {
 				dispatch({
@@ -89,22 +88,20 @@ const ProductoState = ({ children }) => {
 		}
 		try {
 			const res = await axios.post("/api/productos", datos);
+			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: CREAR_PRODUCTO_EXITO,
-				payload: { msg: res.data.msg, categoria: "success" },
+				payload: { categoria: "success" },
 			});
 		} catch (error) {
-			dispatch({
-				type: CREAR_PRODUCTO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
-			});
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
 
 		setTimeout(() => {
 			dispatch({
 				type: LIMPIAR_MENSAJE,
 			});
-		}, 1000);
+		}, 3000);
 	};
 
 	const eliminarProducto = async (_id) => {
@@ -114,15 +111,13 @@ const ProductoState = ({ children }) => {
 		}
 		try {
 			const res = await axios.delete(`/api/productos/${_id}`);
+			Swal.fire("Correcto", "Producto Eliminado", "success");
 			dispatch({
 				type: ELIMINAR_PRODUCTO_EXITO,
-				payload: { msg: res.data.msg, categoria: "success", _id },
+				payload: { _id: res.data._id },
 			});
 		} catch (error) {
-			dispatch({
-				type: ELIMINAR_PRODUCTO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
-			});
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
 
 		setTimeout(() => {
@@ -139,15 +134,13 @@ const ProductoState = ({ children }) => {
 		}
 		try {
 			const res = await axios.put(`/api/productos/${_id}`, datos);
+			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: ACTUALIZAR_PRODUCTO_EXITO,
-				payload: { msg: res.data.msg, categoria: "success" },
+				payload: { categoria: "success" },
 			});
 		} catch (error) {
-			dispatch({
-				type: ACTUALIZAR_PRODUCTO_ERROR,
-				payload: { msg: error.response.data.msg, categoria: "error" },
-			});
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
 
 		setTimeout(() => {

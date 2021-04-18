@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 
 import productosContext from "../../context/productos/productosContext";
 
@@ -22,13 +21,8 @@ const EditarProducto = ({ history, match }) => {
 	// Routing
 	useEffect(() => {
 		if (mensajeproducto) {
-			if (mensajeproducto.categoria === "error") {
-				Swal.fire("Error", mensajeproducto.msg, mensajeproducto.categoria);
-			} else {
-				Swal.fire("Correcto", mensajeproducto.msg, mensajeproducto.categoria);
-				setTimeout(() => {
-					history.push("/productos");
-				}, 1000);
+			if (mensajeproducto.categoria === "error" || mensajeproducto.categoria === "success") {
+				history.push("/productos");
 			}
 		}
 		// eslint-disable-next-line
@@ -72,7 +66,6 @@ const EditarProducto = ({ history, match }) => {
 		precioCosto,
 		precioVenta,
 		cantidad,
-		metodoContable,
 		categoria,
 		imagen: imagenProducto,
 	} = productoseleccionado;
@@ -82,7 +75,6 @@ const EditarProducto = ({ history, match }) => {
 		costo: precioCosto,
 		venta: precioVenta,
 		cantidad,
-		metodoContable,
 		categoria,
 	};
 
@@ -97,9 +89,6 @@ const EditarProducto = ({ history, match }) => {
 		cantidad: Yup.number()
 			.required("Debes ingresar al menos 0 para registrar el producto")
 			.min(0, "No puedes ingresar numeros negativos"),
-		metodoContable: Yup.string().required(
-			"Ingrese como se lleva el control del producto"
-		),
 		categoria: Yup.string("No puedes ingresar numeros"),
 	});
 
@@ -109,7 +98,6 @@ const EditarProducto = ({ history, match }) => {
 			formData.append("precioCosto", datos.costo);
 			formData.append("precioVenta", datos.venta);
 			formData.append("cantidad", datos.cantidad);
-			formData.append("metodoContable", datos.metodoContable);
 			formData.append("categoria", datos.categoria);
 			if (imagen.length) {
 				formData.append("imagen", imagen[0]);
@@ -227,12 +215,7 @@ const EditarProducto = ({ history, match }) => {
 										type="number"
 										name="cantidad"
 										id="cantidad"
-										step={
-											props.values.metodoContable === "CONTABLE" ||
-											props.values.metodoContable === ""
-												? ""
-												: "0.1"
-										}
+										step="0.1"
 										placeholder="Cantidad"
 										value={props.values.cantidad}
 										onChange={props.handleChange}
@@ -242,33 +225,6 @@ const EditarProducto = ({ history, match }) => {
 									<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
 										<p className="font-bold">Error</p>
 										<p>{props.errors.cantidad}</p>
-									</div>
-								)}
-								<div className="mb-4">
-									<label
-										className="block text-gray-700 text-sm font-bold mb-2"
-										htmlFor="metodoContable"
-									>
-										Metodo Contable:
-									</label>
-									<select
-										name="metodoContable"
-										id="metodoContable"
-										className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
-										value={props.values.metodoContable}
-										onChange={props.handleChange}
-										onBlur={props.handleBlur}
-									>
-										<option value="">-- SELECCIONE --</option>
-										<option value="CONTABLE">CONTABLE</option>
-										<option value="PESO">PESO</option>
-										<option value="LIQUIDO">LIQUIDO</option>
-									</select>
-								</div>
-								{props.errors.metodoContable && (
-									<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
-										<p className="font-bold">Error</p>
-										<p>{props.errors.metodoContable}</p>
 									</div>
 								)}
 								<div className="mb-4">

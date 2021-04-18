@@ -72,7 +72,7 @@ const UsuariosState = ({ children }) => {
 	const eliminarUsuario = async (_id) => {
 		try {
 			const res = await axios.delete(`/api/usuarios/${_id}`);
-			Swal.fire("Correcto", res.data.msg, "success");
+			Swal.fire("Correcto", "Usuario Eliminado", "success");
 			dispatch({
 				type: ELIMINAR_USUARIO_EXITO,
 				payload: res.data,

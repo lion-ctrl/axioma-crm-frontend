@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import Swal from "sweetalert2";
 import {
 	BarChart,
 	Bar,
@@ -31,8 +30,9 @@ const VerProducto = ({ match, history }) => {
 
 	useEffect(() => {
 		if (mensajeproducto) {
-			Swal.fire("Error", mensajeproducto.msg, mensajeproducto.categoria);
-			history.push("/productos");
+			if (mensajeproducto.categoria === "error") {
+				history.push("/productos");
+			}
 		}
 	}, [mensajeproducto, history]);
 
