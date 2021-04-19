@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import gastosContext from "../context/gastos/gastosContext";
-
-const useGastosFiltro = () => {
-    // context
-    const {filtrarGastos} = useContext(gastosContext);
+const FiltroFechas = ({fn}) => {
     
 	const formik = useFormik({
 		initialValues: {
@@ -20,7 +16,7 @@ const useGastosFiltro = () => {
 			fechaf: Yup.date().min(Yup.ref("fechai"),"La fecha final no puede ser menor que la inicial"),
 		}),
 		onSubmit: (datos) => {
-			filtrarGastos(datos);
+			fn(datos);
 		},
 	});
 
@@ -43,7 +39,7 @@ const useGastosFiltro = () => {
 				</div>
 			)}
 			<div className="md:flex justify-center">
-				<div className="md:mr-5 w-full">
+				<div className="md:mr-5 w-full mb-4 md:mb-0">
 					<label
 						className="block text-gray-700 text-sm font-bold mb-2"
 						htmlFor="fechai"
@@ -87,4 +83,4 @@ const useGastosFiltro = () => {
 	);
 };
 
-export default useGastosFiltro;
+export default FiltroFechas;

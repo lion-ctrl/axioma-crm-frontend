@@ -5,11 +5,11 @@ import gastosContext from "../../context/gastos/gastosContext";
 
 import Layout from "../Layout/Layout";
 import Gasto from "./Gasto"
-import UseGastosFiltro from "../../hooks/GastosFiltro";
+import FiltroFechas from "../../hooks/FiltroFechas";
 
 const Pedidos = () => {
 	// context
-	const { mostrarGastos, gastos } = useContext(gastosContext);
+	const { mostrarGastos, gastos, filtrarGastos } = useContext(gastosContext);
 
 	useEffect(() => {
 		mostrarGastos();
@@ -26,7 +26,7 @@ const Pedidos = () => {
 				Nuevo Gasto
 			</Link>
 
-			<UseGastosFiltro/>
+			<FiltroFechas fn={filtrarGastos} />
 
 			{gastos.length ? (
 				gastos.map((gasto) => (

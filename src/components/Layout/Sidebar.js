@@ -45,6 +45,15 @@ const Sidebar = () => {
 						Gastos
 					</Link>
 				</li>
+				<li
+					className={
+						history.location.pathname === "/ventas" ? "bg-blue-800 p-2" : "p-2"
+					}
+				>
+					<Link to={"/ventas"} className="text-white block">
+						Ventas
+					</Link>
+				</li>
 			</nav>
 		</aside>
 	);
