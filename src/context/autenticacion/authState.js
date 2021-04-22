@@ -11,7 +11,9 @@ import {
 	CERRAR_SESION,
 	LIMPIAR_MENSAJE,
 	EDITAR_USUARIO_EXITO,
-	EDITAR_USUARIO_PASSWORD_EXITO
+	EDITAR_USUARIO_PASSWORD_EXITO,
+	OBTENER_NEGOCIO_EXITO,
+	EDITAR_NEGOCIO_EXITO
 } from "../../types";
 
 import axios from "../../config/clienteAxios";
@@ -23,6 +25,7 @@ const AuthState = ({ children }) => {
 		autenticado: null,
 		mensaje: null,
 		cargando: true,
+		negocio: null,
 	};
 
 	const [state, dispatch] = useReducer(authReducer, initialState);
@@ -146,6 +149,46 @@ const AuthState = ({ children }) => {
 		}
 	};
 
+	const obtenerNegocio = async () => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+
+		try {
+			const res = await axios.get("/api/negocio");
+			dispatch({
+				type: OBTENER_NEGOCIO_EXITO,
+				payload: res.data[0],
+			});
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
+
+	const editarNegocio = async (datos) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+
+		try {
+			const res = await axios.put("/api/negocio", datos);
+			Swal.fire("Correcto", "Negocio Actualizado", "success");
+			dispatch({
+				type: EDITAR_NEGOCIO_EXITO,
+				payload: { negocio: res.data, categoria: "success" },
+			});
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE,
+				});
+			}, 1000);
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
+
 	return (
 		<authContext.Provider
 			value={{
@@ -153,11 +196,14 @@ const AuthState = ({ children }) => {
 				autenticado: state.autenticado,
 				mensaje: state.mensaje,
 				cargando: state.cargando,
+				negocio: state.negocio,
 				loginUsuario,
 				usuarioAutenticado,
 				cerrarSesion,
 				editarPerfil,
 				editarPassword,
+				obtenerNegocio,
+				editarNegocio,
 			}}
 		>
 			{children}

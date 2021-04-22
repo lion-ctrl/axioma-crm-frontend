@@ -1,12 +1,18 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link, useHistory } from "react-router-dom";
+
+import authContext from "../../context/autenticacion/authContext"
 
 const Sidebar = () => {
 	const history = useHistory();
+	const {negocio} = useContext(authContext);
+
+	if (!negocio) return null;
+	
 	return (
 		<aside className="bg-gray-800 md:w-1/5 p-5 md:min-h-screen">
 			<div>
-				<p className="text-white text-xl font-black">Boom Import</p>
+				<p className="text-white text-xl font-black">{negocio.nombre}</p>
 			</div>
 			<nav className="mt-5 list-none">
 				<li
@@ -61,6 +67,15 @@ const Sidebar = () => {
 				>
 					<Link to={"/perfil"} className="text-white block">
 						Perfil
+					</Link>
+				</li>
+				<li
+					className={
+						history.location.pathname === "/negocio" ? "bg-blue-800 p-2" : "p-2"
+					}
+				>
+					<Link to={"/negocio"} className="text-white block">
+						Negocio
 					</Link>
 				</li>
 			</nav>

@@ -28,6 +28,9 @@ import Perfil from "./components/perfil/Perfil";
 import EditarPerfil from "./components/perfil/EditarPerfil";
 import EditarPassword from "./components/perfil/EditarPassword";
 
+import Negocio from "./components/negocio/Negocio";
+import EditarNegocio from "./components/negocio/EditarNegocio";
+
 // Context
 import AuthState from "./context/autenticacion/authState";
 import AlertaState from "./context/alertas/alertaState";
@@ -75,6 +78,9 @@ function App() {
                     <RutaPrivada exact path="/perfil" component={Perfil} />
                     <RutaPrivada exact path="/perfil/editar" component={EditarPerfil} />
                     <RutaPrivada exact path="/perfil/password" component={EditarPassword} />
+
+                    <RutaPrivada exact path="/negocio" component={Negocio} />
+                    <RutaPrivada exact path="/negocio/editar" component={EditarNegocio} />
                   </Switch>
                 </Router>
               </VentasState>

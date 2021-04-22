@@ -5,7 +5,9 @@ import {
 	CERRAR_SESION,
 	LIMPIAR_MENSAJE,
 	EDITAR_USUARIO_EXITO,
-	EDITAR_USUARIO_PASSWORD_EXITO
+	EDITAR_USUARIO_PASSWORD_EXITO,
+	OBTENER_NEGOCIO_EXITO,
+	EDITAR_NEGOCIO_EXITO
 } from "../../types";
 
 const authReducer = (state, action) => {
@@ -51,6 +53,17 @@ const authReducer = (state, action) => {
 			return {
 				...state,
 				mensaje: action.payload
+			}
+		case OBTENER_NEGOCIO_EXITO:
+			return {
+				...state,
+				negocio: action.payload
+			}
+		case EDITAR_NEGOCIO_EXITO:
+			return {
+				...state,
+				negocio: action.payload.negocio,
+				mensaje: { categoria: action.payload.categoria }
 			}
 		default:
 			return state;

@@ -4,10 +4,11 @@ import { Route, Redirect } from "react-router-dom";
 import AuthContext from "../../context/autenticacion/authContext";
 
 const RutaPrivada = ({ component: Component, ...props }) => {
-	const { autenticado, cargando, usuarioAutenticado } = useContext(AuthContext);
+	const { autenticado, cargando, usuarioAutenticado, obtenerNegocio } = useContext(AuthContext);
 
 	useEffect(() => {
 			usuarioAutenticado();
+			obtenerNegocio();
 		// eslint-disable-next-line
 	}, []);
 	return (
