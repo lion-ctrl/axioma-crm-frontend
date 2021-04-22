@@ -3,7 +3,9 @@ import {
 	LOGIN_ERROR,
 	OBTENER_USUARIO,
 	CERRAR_SESION,
-	LIMPIAR_MENSAJE
+	LIMPIAR_MENSAJE,
+	EDITAR_USUARIO_EXITO,
+	EDITAR_USUARIO_PASSWORD_EXITO
 } from "../../types";
 
 const authReducer = (state, action) => {
@@ -36,7 +38,19 @@ const authReducer = (state, action) => {
 		case LIMPIAR_MENSAJE:
 			return {
 				...state,
-				mensaje: null
+				mensaje: null,
+			};
+		case EDITAR_USUARIO_EXITO: {
+			return {
+				...state,
+				usuario: action.payload.usuario,
+				mensaje: { categoria: action.payload.categoria },
+			};
+		}
+		case EDITAR_USUARIO_PASSWORD_EXITO:
+			return {
+				...state,
+				mensaje: action.payload
 			}
 		default:
 			return state;

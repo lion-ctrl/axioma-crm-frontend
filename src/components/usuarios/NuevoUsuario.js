@@ -168,7 +168,7 @@ const NuevoUsuario = () => {
 							className="block text-gray-700 text-sm font-bold mb-2"
 							htmlFor="rol"
 						>
-							Rol del nuevo Usuario
+							Rol de Usuario
 						</label>
 						<select
 							name="rol"

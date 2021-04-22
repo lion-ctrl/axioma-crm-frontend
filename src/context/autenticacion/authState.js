@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import Swal from "sweetalert2";
 
 import authContext from "./authContext";
 import authReducer from "./authReducer";
@@ -8,7 +9,9 @@ import {
 	LOGIN_ERROR,
 	OBTENER_USUARIO,
 	CERRAR_SESION,
-	LIMPIAR_MENSAJE
+	LIMPIAR_MENSAJE,
+	EDITAR_USUARIO_EXITO,
+	EDITAR_USUARIO_PASSWORD_EXITO
 } from "../../types";
 
 import axios from "../../config/clienteAxios";
@@ -41,8 +44,8 @@ const AuthState = ({ children }) => {
 
 			setTimeout(() => {
 				dispatch({
-					type: LIMPIAR_MENSAJE
-				})
+					type: LIMPIAR_MENSAJE,
+				});
 			}, 1000);
 		}
 	};
@@ -68,8 +71,8 @@ const AuthState = ({ children }) => {
 
 			setTimeout(() => {
 				dispatch({
-					type: LIMPIAR_MENSAJE
-				})
+					type: LIMPIAR_MENSAJE,
+				});
 			}, 1000);
 		}
 	};
@@ -86,9 +89,61 @@ const AuthState = ({ children }) => {
 
 		setTimeout(() => {
 			dispatch({
-				type: LIMPIAR_MENSAJE
-			})
+				type: LIMPIAR_MENSAJE,
+			});
 		}, 1000);
+	};
+
+	const editarPerfil = async (datos) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+
+		try {
+			const usuario = await axios.put(`/api/auth/${datos._id}`, datos);
+			Swal.fire("Correcto", usuario.data.msg, "success");
+			dispatch({
+				type: EDITAR_USUARIO_EXITO,
+				payload: {
+					usuario: usuario.data.usuarioActualizado,
+					categoria: "success",
+				},
+			});
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE,
+				});
+			}, 1000);
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
+
+	const editarPassword = async (datos) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+
+		try {
+			const res = await axios.put(`/api/auth/password/${datos._id}`, {
+				...datos,
+				...state.usuario,
+			});
+			Swal.fire("Correcto", res.data.msg, "success");
+			dispatch({
+				type: EDITAR_USUARIO_PASSWORD_EXITO,
+				payload: { categoria: "success" },
+			});
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE,
+				});
+			}, 1000);
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
 	};
 
 	return (
@@ -101,6 +156,8 @@ const AuthState = ({ children }) => {
 				loginUsuario,
 				usuarioAutenticado,
 				cerrarSesion,
+				editarPerfil,
+				editarPassword,
 			}}
 		>
 			{children}

@@ -24,6 +24,10 @@ import NuevaVenta from "./components/ventas/NuevaVenta";
 import VerVenta from "./components/ventas/VerVenta";
 import EditarVenta from "./components/ventas/EditarVenta";
 
+import Perfil from "./components/perfil/Perfil";
+import EditarPerfil from "./components/perfil/EditarPerfil";
+import EditarPassword from "./components/perfil/EditarPassword";
+
 // Context
 import AuthState from "./context/autenticacion/authState";
 import AlertaState from "./context/alertas/alertaState";
@@ -67,6 +71,10 @@ function App() {
                     <RutaPrivada exact path="/nueva-venta" component={NuevaVenta} />
                     <RutaPrivada exact path="/venta/:id" component={VerVenta} />
                     <RutaPrivada exact path="/venta/editar/:id" component={EditarVenta} />
+
+                    <RutaPrivada exact path="/perfil" component={Perfil} />
+                    <RutaPrivada exact path="/perfil/editar" component={EditarPerfil} />
+                    <RutaPrivada exact path="/perfil/password" component={EditarPassword} />
                   </Switch>
                 </Router>
               </VentasState>
