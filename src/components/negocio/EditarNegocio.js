@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import authContext from "../../context/autenticacion/authContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdminstrador from "../rutas/RutaAdministrador";
 
 const EditarNegocio = ({history}) => {
     const { negocio, editarNegocio, mensaje} = useContext(authContext);
@@ -29,6 +30,7 @@ const EditarNegocio = ({history}) => {
 	});
     return (
         <Layout>
+			<RutaAdminstrador/>
             <h1 className="text-2xl text-gray-800 font-light">Editar Negocio</h1>
 
             <div className="flex justify-center mt-5">

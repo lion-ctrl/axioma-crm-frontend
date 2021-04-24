@@ -89,7 +89,7 @@ const Principal = () => {
 				</BarChart>
 			</ResponsiveContainer>
 			<h2 className="text-2xl text-gray-800 font-light mt-4">Productos con más Ventas</h2>
-			{productos.length > 0 && (
+			{productos.length > 0 ? (
 				<table className="table-auto shadow-md mt-4 w-full">
 					<thead className="bg-gray-800">
 						<tr className="text-white">
@@ -112,6 +112,8 @@ const Principal = () => {
 						))}
 					</tbody>
 				</table>
+			) : (
+				<p>Aún no tienes ventas</p>
 			)}
 		</Layout>
 	);

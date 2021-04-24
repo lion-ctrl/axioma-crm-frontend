@@ -5,9 +5,10 @@ import authContext from "../../context/autenticacion/authContext"
 
 const Sidebar = () => {
 	const history = useHistory();
-	const {negocio} = useContext(authContext);
+	const {negocio,usuario} = useContext(authContext);
 
 	if (!negocio) return null;
+	if (!usuario) return null;
 	
 	return (
 		<aside className="bg-gray-800 md:w-1/5 p-5 md:min-h-screen">
@@ -24,33 +25,38 @@ const Sidebar = () => {
 						Panel Principal
 					</Link>
 				</li>
-				<li
-					className={
-						history.location.pathname === "/usuarios" ? "bg-blue-800 p-2" : "p-2"
-					}
-				>
-					<Link to={"/usuarios"} className="text-white block">
-						Usuarios
-					</Link>
-				</li>
+				{usuario.rol === "ADMIN" &&
+					<li
+						className={
+							history.location.pathname === "/usuarios" ? "bg-blue-800 p-2" : "p-2"
+						}
+					>
+						<Link to={"/usuarios"} className="text-white block">
+							Usuarios
+						</Link>
+					</li>
+				}
+				
                 <li
 					className={
 						history.location.pathname === "/productos" ? "bg-blue-800 p-2" : "p-2"
 					}
 				>
 					<Link to={"/productos"} className="text-white block">
-						Productos
+						Inventario
 					</Link>
 				</li>
-				<li
-					className={
-						history.location.pathname === "/gastos" ? "bg-blue-800 p-2" : "p-2"
-					}
-				>
-					<Link to={"/gastos"} className="text-white block">
-						Gastos
-					</Link>
-				</li>
+				{usuario.rol === "ADMIN" &&
+					<li
+						className={
+							history.location.pathname === "/gastos" ? "bg-blue-800 p-2" : "p-2"
+						}
+					>
+						<Link to={"/gastos"} className="text-white block">
+							Gastos
+						</Link>
+					</li>
+				}
 				<li
 					className={
 						history.location.pathname === "/ventas" ? "bg-blue-800 p-2" : "p-2"
@@ -69,15 +75,17 @@ const Sidebar = () => {
 						Perfil
 					</Link>
 				</li>
-				<li
-					className={
-						history.location.pathname === "/negocio" ? "bg-blue-800 p-2" : "p-2"
-					}
-				>
-					<Link to={"/negocio"} className="text-white block">
-						Negocio
-					</Link>
-				</li>
+				{usuario.rol === "ADMIN" &&
+					<li
+						className={
+							history.location.pathname === "/negocio" ? "bg-blue-800 p-2" : "p-2"
+						}
+					>
+						<Link to={"/negocio"} className="text-white block">
+							Negocio
+						</Link>
+					</li>
+				}
 			</nav>
 		</aside>
 	);

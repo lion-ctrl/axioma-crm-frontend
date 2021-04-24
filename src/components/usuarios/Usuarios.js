@@ -5,6 +5,7 @@ import usuariosContext from "../../context/usuarios/usuariosContext";
 
 import Layout from "../Layout/Layout";
 import Usuario from "./Usuario";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const Usuarios = () => {
 	// context
@@ -21,6 +22,7 @@ const Usuarios = () => {
 
 	return (
 		<Layout>
+			<RutaAdministrador/>
 			<h1 className="text-2xl text-gray-800 font-light">Usuarios</h1>
 
 			<Link

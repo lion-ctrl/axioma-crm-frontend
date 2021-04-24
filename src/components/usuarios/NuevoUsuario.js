@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import usuariosContext from "../../context/usuarios/usuariosContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const NuevoUsuario = () => {
 	// context
@@ -51,6 +52,7 @@ const NuevoUsuario = () => {
 	});
 	return (
 		<Layout>
+			<RutaAdministrador/>
 			<h1 className="text-2xl text-gray-800 font-light">Nuevo Usuario</h1>
 			<div className="flex justify-center mt-5">
 				<form

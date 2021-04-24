@@ -6,6 +6,7 @@ import gastosContext from "../../context/gastos/gastosContext";
 import Layout from "../Layout/Layout";
 import Gasto from "./Gasto"
 import FiltroFechas from "../../hooks/FiltroFechas";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const Pedidos = () => {
 	// context
@@ -17,6 +18,7 @@ const Pedidos = () => {
 	}, []);
 	return (
 		<Layout>
+			<RutaAdministrador />
 			<h1 className="text-2xl text-gray-800 font-light">Gastos</h1>
 
 			<Link

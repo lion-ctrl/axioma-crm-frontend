@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import authContext from "../../context/autenticacion/authContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdminstrador from "../rutas/RutaAdministrador";
 
 const Negocio = () => {
 	const { negocio } = useContext(authContext);
@@ -12,6 +13,7 @@ const Negocio = () => {
 
 	return (
 		<Layout>
+			<RutaAdminstrador/>
 			<h1 className="text-2xl text-gray-800 font-light">
 				Negocio: {!negocio.nombre ? "Sin Nombre" : negocio.nombre}
 			</h1>
@@ -41,7 +43,7 @@ const Negocio = () => {
 						</svg>
 						{!negocio.email ? "sin email" : negocio.email}
 					</p>
-                    <p className="flex items-center my-2">
+					<p className="flex items-center my-2">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"

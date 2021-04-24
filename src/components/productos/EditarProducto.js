@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import productosContext from "../../context/productos/productosContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdminstrador from "../rutas/RutaAdministrador";
 
 const EditarProducto = ({ history, match }) => {
 	// Context
@@ -107,6 +108,7 @@ const EditarProducto = ({ history, match }) => {
 
 	return (
 		<Layout>
+			<RutaAdminstrador/>
 			<button
 				type="button"
 				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"

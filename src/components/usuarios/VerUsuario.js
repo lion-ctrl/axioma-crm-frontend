@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from "react";
 import usuariosContext from "../../context/usuarios/usuariosContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const VerUsuario = ({ match, history }) => {
 	// _id
@@ -35,6 +36,7 @@ const VerUsuario = ({ match, history }) => {
 	const total = ventas.reduce((total,venta) => total += venta.total,0);
 	return (
 		<Layout>
+			<RutaAdministrador/>
 			<h1 className="text-2xl text-gray-800 font-light">
 				Emplead@: {usuario.nombre} {usuario.apellido}
 			</h1>

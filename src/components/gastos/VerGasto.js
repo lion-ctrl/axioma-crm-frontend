@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from "react";
 import gastoContext from "../../context/gastos/gastosContext";
 
 import Layout from "../Layout/Layout";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const VerGasto = ({ match, history }) => {
 	const { id } = match.params;
@@ -31,6 +32,7 @@ const VerGasto = ({ match, history }) => {
 	const { nombre, creado, tipo, costo, metodo, productos } = gastoseleccionado;
 	return (
 		<Layout>
+			<RutaAdministrador/>
 			<button
 				type="button"
 				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"

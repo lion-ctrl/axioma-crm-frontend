@@ -133,35 +133,40 @@ const EditarPerfil = ({ history }) => {
 										</p>
 									</div>
 								)}
-								<div className="mb-4">
-									<label
-										className="block text-gray-700 text-sm font-bold mb-2"
-										htmlFor="rol"
-									>
-										Rol de Usuario
-									</label>
-									<select
-										name="rol"
-										id="rol"
-										className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
-										value={props.values.rol}
-										onChange={props.handleChange}
-										onBlur={props.handleBlur}
-									>
-										<option value="">-- SELECCIONE --</option>
-										<option value="EMPLEADO">EMPLEADO</option>
-										<option value="ADMIN">ADMINISTRADOR</option>
-									</select>
-								</div>
-								{props.errors.rol && (
-									<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-2">
-										<p>
-											{" "}
-											<span className="font-bold">Error:</span>{" "}
-											{props.errors.rol}
-										</p>
-									</div>
+								{usuario.rol === "ADMIN" && (
+									<>
+										<div className="mb-4">
+											<label
+												className="block text-gray-700 text-sm font-bold mb-2"
+												htmlFor="rol"
+											>
+												Rol de Usuario
+											</label>
+											<select
+												name="rol"
+												id="rol"
+												className="mt-2 shadow border text-gray-700 p-2 text-center rounded leading-tight focus:outline-none uppercase w-full"
+												value={props.values.rol}
+												onChange={props.handleChange}
+												onBlur={props.handleBlur}
+											>
+												<option value="">-- SELECCIONE --</option>
+												<option value="EMPLEADO">EMPLEADO</option>
+												<option value="ADMIN">ADMINISTRADOR</option>
+											</select>
+										</div>
+										{props.errors.rol && (
+											<div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-2">
+												<p>
+													{" "}
+													<span className="font-bold">Error:</span>{" "}
+													{props.errors.rol}
+												</p>
+											</div>
+										)}
+									</>
 								)}
+
 								<input
 									type="submit"
 									className="bg-gray-800 w-full mt-5 p-2 text-white uppercase hover:bg-gray-900"

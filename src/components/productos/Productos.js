@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import productosContext from "../../context/productos/productosContext";
+import authContext from "../../context/autenticacion/authContext";
 
 import Layout from "../Layout/Layout";
 import Producto from "./Producto";
@@ -21,6 +22,8 @@ const Productos = () => {
 		paginaAnterior
 	} = useContext(productosContext);
 
+	const {usuario} = useContext(authContext);
+
 	// * Filtro
 	const { FiltroUI, categoria } = useCategoriaFiltro(categorias);
 
@@ -32,17 +35,23 @@ const Productos = () => {
 		}
 		// eslint-disable-next-line
 	}, [categoria]);
+
+	if (!usuario) return null;
+
 	return (
 		<Layout>
 			<h1 className="text-2xl text-gray-800 font-light">Productos</h1>
 
-			<div className="md:flex items-center md:justify-between">
-				<Link
-					to={"/nuevo-producto"}
-					className="bg-blue-800 py-2 px-5 mt-3 inline-block text-white rounded text-sm hover:bg-gray-800 mb-3 uppercase font-bold"
-				>
-					Nuevo Producto
-				</Link>
+			<div className="md:flex items-center md:justify-between mt-4">
+				{usuario.rol === "ADMIN" &&
+					<Link
+						to={"/nuevo-producto"}
+						className="bg-blue-800 py-2 px-5 mt-3 inline-block text-white rounded text-sm hover:bg-gray-800 mb-3 uppercase font-bold"
+					>
+						Nuevo Producto
+					</Link>
+				}
+				
 
 				{FiltroUI()}
 			</div>

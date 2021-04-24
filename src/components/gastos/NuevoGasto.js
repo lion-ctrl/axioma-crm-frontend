@@ -7,6 +7,7 @@ import gastosContext from "../../context/gastos/gastosContext";
 import Layout from "../Layout/Layout";
 import AsignarProductos from "./AsignarProductos";
 import AsignarCantidades from "./AsignarCantidades";
+import RutaAdministrador from "../rutas/RutaAdministrador";
 
 const NuevoGasto = ({ history }) => {
 	// * Context
@@ -55,6 +56,7 @@ const NuevoGasto = ({ history }) => {
 
 	return (
 		<Layout>
+			<RutaAdministrador/>
 			<button
 				type="button"
 				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"

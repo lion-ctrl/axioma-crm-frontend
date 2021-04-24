@@ -162,6 +162,7 @@ const AuthState = ({ children }) => {
 				payload: res.data[0],
 			});
 		} catch (error) {
+			console.log(error);
 			Swal.fire("Error", error.response.data.msg, "error");
 		}
 	};
