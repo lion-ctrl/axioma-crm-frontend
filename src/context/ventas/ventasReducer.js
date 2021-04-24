@@ -53,7 +53,9 @@ const ventasReducer = (state, action) => {
 			return {
 				...state,
 				ventas: action.payload,
-				ventaseleccionada: null
+				ventaseleccionada: null,
+				nuevaventaproductos: [],
+				totalventa: 0
 			};
 		case ELIMINAR_VENTA_EXITO:
 			return {

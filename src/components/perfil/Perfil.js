@@ -18,11 +18,14 @@ const Perfil = () => {
 				className={`mt-20 bg-white rounded p-6 shadow-lg max-w-md mx-auto`}
 			>
 				<div>
-					<p className="font-bold text-gray-800 my-2">
+					<p className="font-bold text-gray-800 mb-2">
 						Nombre(s): {usuario.nombre}
 					</p>
-					<p className="font-bold text-gray-800">
+					<p className="font-bold text-gray-800 mb-2">
 						Apellido(s): {usuario.apellido}
+					</p>
+					<p className="font-bold text-gray-800 mb-2">
+						Tipo de Usuario: {usuario.rol}
 					</p>
 					<p className="flex items-center my-2">
 						<svg

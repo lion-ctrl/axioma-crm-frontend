@@ -16,7 +16,7 @@ const Negocio = () => {
 				Negocio: {!negocio.nombre ? "Sin Nombre" : negocio.nombre}
 			</h1>
 
-			<div className="mt-10 bg-white rounded p-6 shadow-lg max-w-md mx-auto">
+			<div className="mt-20 bg-white rounded p-6 shadow-lg max-w-md mx-auto">
 				<div>
 					<p className="font-bold text-gray-800 my-2">
 						Dirección: {!negocio.direccion ? "" : negocio.direccion}
