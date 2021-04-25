@@ -19,6 +19,7 @@ import Layout from "./Layout/Layout";
 const Principal = () => {
 	const [ventas, setVentas] = useState([]);
 	const [productos, setProductos] = useState([]);
+	const [consulta, seConsulta] = useState(false);
 
 	useEffect(() => {
 		const consultarApi = async () => {
@@ -56,6 +57,7 @@ const Principal = () => {
 				ventasDias = ventasDias.sort((a, b) => a._id - b._id);
 				setVentas(ventasDias);
 				setProductos(res.data.productos);
+				seConsulta(true);
 			} catch (error) {
 				Swal.fire("Error", "Error en el Servidor", "error");
 			}
@@ -63,12 +65,13 @@ const Principal = () => {
 		consultarApi();
 	}, []);
 
-	if (!ventas.length) return "Cargando...";
+	if (!consulta) return "Cargando..."
 
 	return (
 		<Layout>
-			<h2 className="text-2xl text-gray-800 font-light mb-4">Ventas Totales</h2>
-			<ResponsiveContainer width={"100%"} height={550}>
+			<h2 className="text-2xl text-gray-800 font-light mb-4">Ventas Totales esta semana</h2>
+			{ventas.length > 0 && (
+				<ResponsiveContainer width={"100%"} height={550}>
 				<BarChart
 					width={500}
 					height={300}
@@ -88,6 +91,8 @@ const Principal = () => {
 					<Bar dataKey="total" fill="#064e3b" />
 				</BarChart>
 			</ResponsiveContainer>
+			)}
+			
 			<h2 className="text-2xl text-gray-800 font-light mt-4">Productos con más Ventas</h2>
 			{productos.length > 0 ? (
 				<table className="table-auto shadow-md mt-4 w-full">

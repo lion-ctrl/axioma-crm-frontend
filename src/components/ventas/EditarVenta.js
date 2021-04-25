@@ -1,8 +1,10 @@
 import React, { useEffect, useContext } from "react";
+import {Redirect} from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import ventasContext from "../../context/ventas/ventasContext";
+import authContext from "../../context/autenticacion/authContext";
 
 import Layout from "../Layout/Layout";
 import AsignarProductos from "./AsignarProductos";
@@ -14,6 +16,7 @@ const EditarVenta = ({ match, history }) => {
 	const { obtenerVenta, mensajeventa, ventaseleccionada, totalventa, EditarVenta } = useContext(
 		ventasContext
 	);
+	const { usuario } = useContext(authContext);
 
 	useEffect(() => {
 		if (id) {
@@ -32,8 +35,15 @@ const EditarVenta = ({ match, history }) => {
 	}, [mensajeventa]);
 
 	if (!ventaseleccionada) return "cargando...";
+	if (!usuario) return null;
 
-	const { nombre, metodo, productos, _id } = ventaseleccionada;
+	const { nombre, metodo, productos, _id, usuario:user } = ventaseleccionada;
+
+	if (usuario.rol !== "ADMIN") {
+		if (usuario._id !== user._id) {
+			return <Redirect to="/ventas"/>
+		}
+	}
 
 	const initialValues = {
 		nombre,

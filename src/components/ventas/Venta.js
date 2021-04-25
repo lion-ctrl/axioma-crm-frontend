@@ -54,22 +54,25 @@ const Venta = ({ venta }) => {
 						/>
 					</svg>
 				</Link>
-				<Link
-					to={`/venta/editar/${venta._id}`}
-					className="flex items-center justify-center mt-4 bg-green-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
-				>
-					Editar venta{" "}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						// eslint-disable-next-line
-						className="w-4 h-4 ml-2"
+				{venta.usuario === usuario._id || usuario.rol === "ADMIN" ? (
+					<Link
+						to={`/venta/editar/${venta._id}`}
+						className="flex items-center justify-center mt-4 bg-green-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
 					>
-						<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-					</svg>
-				</Link>
+						Editar venta{" "}
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-5 w-5"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							// eslint-disable-next-line
+							className="w-4 h-4 ml-2"
+						>
+							<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+						</svg>
+					</Link>
+				) : null}
+
 				{usuario.rol === "ADMIN" && (
 					<button
 						onClick={() => eliminarVentaClick(venta._id)}

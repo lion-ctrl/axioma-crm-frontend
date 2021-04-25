@@ -23,7 +23,7 @@ const ProductoState = ({ children }) => {
 	const initialState = {
 		productos: [],
 		totalproductos: 0,
-		productosporpagina: 2,
+		productosporpagina: 5,
 		cantidadpaginas: 0,
 		paginaactual: 1,
 		desde: 0,

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 // componentes
 import Login from "./components/Login";
@@ -81,6 +81,8 @@ function App() {
 
                     <RutaPrivada exact path="/negocio" component={Negocio} />
                     <RutaPrivada exact path="/negocio/editar" component={EditarNegocio} />
+
+                    <Redirect to="/principal" />
                   </Switch>
                 </Router>
               </VentasState>

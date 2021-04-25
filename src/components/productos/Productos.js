@@ -37,6 +37,7 @@ const Productos = () => {
 	}, [categoria]);
 
 	if (!usuario) return null;
+	if (!productosfiltrados.length) return null;
 
 	return (
 		<Layout>
