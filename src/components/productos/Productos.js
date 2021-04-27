@@ -19,7 +19,8 @@ const Productos = () => {
 		paginaactual,
 		cantidadpaginas,
 		paginaSiguiente,
-		paginaAnterior
+		paginaAnterior,
+		obtenerCategorias
 	} = useContext(productosContext);
 
 	const {usuario} = useContext(authContext);
@@ -33,11 +34,13 @@ const Productos = () => {
 		} else {
 			filtrarProductosCategoria(categoria);
 		}
+		if (!categorias.length) {
+			obtenerCategorias();
+		}
 		// eslint-disable-next-line
 	}, [categoria]);
 
 	if (!usuario) return null;
-	if (!productosfiltrados.length) return null;
 
 	return (
 		<Layout>

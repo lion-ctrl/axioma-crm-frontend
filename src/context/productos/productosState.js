@@ -17,6 +17,8 @@ import {
 	ACTUALIZAR_PRODUCTO_EXITO,
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
+	CREAR_CATEGORIA_EXITO,
+	OBTENER_CATEGORIAS_EXITO
 } from "../../types";
 
 const ProductoState = ({ children }) => {
@@ -30,7 +32,7 @@ const ProductoState = ({ children }) => {
 		productosfiltrados: [],
 		productoseleccionado: null,
 		mensajeproducto: null,
-		categorias: ["HOGAR", "GOLOSINAS", "PERSONALES"],
+		categorias: [],
 	};
 
 	const [state, dispatch] = useReducer(productosReducer, initialState);
@@ -162,7 +164,7 @@ const ProductoState = ({ children }) => {
 				payload: res.data,
 			});
 		} catch (error) {
-			console.log(error);
+			Swal.fire("Error",error.response.data.msg,"error");
 		}
 	};
 
@@ -188,6 +190,44 @@ const ProductoState = ({ children }) => {
 		});
 	};
 
+	const nuevaCategoria = async (categoria) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.post("/api/categorias",{nombre:categoria});
+			Swal.fire("Correcto",res.data.msg,"success");
+			dispatch({
+				type: CREAR_CATEGORIA_EXITO,
+				payload: {categoria:"success"},
+			});
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE,
+				});
+			}, 1000);
+		} catch (error) {
+			Swal.fire("Correcto",error.response.data.msg,"success");
+		}
+	}
+
+	const obtenerCategorias = async () => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.get("/api/categorias");
+			dispatch({
+				type: OBTENER_CATEGORIAS_EXITO,
+				payload: res.data,
+			});
+		} catch (error) {
+			Swal.fire("Correcto",error.response.data.msg,"success");
+		}
+	}
+
 	return (
 		<productosContext.Provider
 			value={{
@@ -208,6 +248,8 @@ const ProductoState = ({ children }) => {
 				filtrarProductosCategoria,
 				paginaSiguiente,
 				paginaAnterior,
+				nuevaCategoria,
+				obtenerCategorias
 			}}
 		>
 			{children}

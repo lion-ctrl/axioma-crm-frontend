@@ -15,7 +15,7 @@ const Perfil = () => {
 			<h1 className="text-2xl text-gray-800 font-light">Perfil</h1>
 
 			<div
-				className={`mt-20 bg-white rounded p-6 shadow-lg max-w-md mx-auto`}
+				className={`mt-5 bg-white rounded p-6 shadow-lg max-w-md mx-auto`}
 			>
 				<div>
 					<p className="font-bold text-gray-800 mb-2">

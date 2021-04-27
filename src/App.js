@@ -28,6 +28,9 @@ import Perfil from "./components/perfil/Perfil";
 import EditarPerfil from "./components/perfil/EditarPerfil";
 import EditarPassword from "./components/perfil/EditarPassword";
 
+import Categorias from "./components/categorias/Categorias";
+import NuevaCategoria from "./components/categorias/NuevaCategoria";
+
 import Negocio from "./components/negocio/Negocio";
 import EditarNegocio from "./components/negocio/EditarNegocio";
 
@@ -81,6 +84,9 @@ function App() {
 
                     <RutaPrivada exact path="/negocio" component={Negocio} />
                     <RutaPrivada exact path="/negocio/editar" component={EditarNegocio} />
+
+                    <RutaPrivada exact path="/categorias" component={Categorias} />
+                    <RutaPrivada exact path="/nueva-categoria" component={NuevaCategoria} />
 
                     <Redirect to="/principal" />
                   </Switch>

@@ -9,6 +9,8 @@ import {
 	ACTUALIZAR_PRODUCTO_EXITO,
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
+	CREAR_CATEGORIA_EXITO,
+	OBTENER_CATEGORIAS_EXITO
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -37,6 +39,7 @@ const productosReducer = (state, action) => {
 		case CREAR_PRODUCTO_EXITO:
 		case ELIMINAR_PRODUCTO_ERROR:
 		case ACTUALIZAR_PRODUCTO_EXITO:
+		case CREAR_CATEGORIA_EXITO:
 			return {
 				...state,
 				mensajeproducto: action.payload,
@@ -67,6 +70,11 @@ const productosReducer = (state, action) => {
 					action.payload.desde + state.productosporpagina
 				),
 			};
+		case OBTENER_CATEGORIAS_EXITO:
+			return {
+				...state,
+				categorias:action.payload
+			}
 		default:
 			return state;
 	}
