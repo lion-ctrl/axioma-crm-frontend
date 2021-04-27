@@ -10,7 +10,10 @@ import {
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
 	CREAR_CATEGORIA_EXITO,
-	OBTENER_CATEGORIAS_EXITO
+	OBTENER_CATEGORIAS_EXITO,
+	ELIMINAR_CATEGORIA_EXITO,
+	SELECCIONAR_CATEGORIA,
+	ACTUALIZAR_CATEGORIA_EXITO,
 } from "../../types";
 
 const productosReducer = (state, action) => {
@@ -28,7 +31,7 @@ const productosReducer = (state, action) => {
 					action.payload.length / state.productosporpagina
 				),
 				paginaactual: 1,
-				productoseleccionado: null
+				productoseleccionado: null,
 			};
 		case OBTENER_PRODUCTO_EXITO:
 			return {
@@ -73,8 +76,30 @@ const productosReducer = (state, action) => {
 		case OBTENER_CATEGORIAS_EXITO:
 			return {
 				...state,
-				categorias:action.payload
-			}
+				categorias: action.payload,
+			};
+		case ELIMINAR_CATEGORIA_EXITO:
+			return {
+				...state,
+				categorias: state.categorias.filter(
+					(categoria) => categoria._id !== action.payload
+				),
+			};
+		case SELECCIONAR_CATEGORIA:
+			return {
+				...state,
+				categoriaseleccionada: action.payload,
+			};
+		case ACTUALIZAR_CATEGORIA_EXITO:
+			return {
+				...state,
+				categorias: state.categorias.map((categoria) =>
+					categoria._id === action.payload.categoriaActualizada._id
+						? action.payload.categoriaActualizada
+						: categoria
+				),
+				mensajeproducto: {categoria: action.payload.categoria},
+			};
 		default:
 			return state;
 	}

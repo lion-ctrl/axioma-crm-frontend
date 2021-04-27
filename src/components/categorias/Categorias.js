@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import productosContext from "../../context/productos/productosContext";
 
 import Layout from "../Layout/Layout";
+import Categoria from "./Categoria";
 
 const Categorias = () => {
-	const { obtenerCategorias } = useContext(productosContext);
+	const { obtenerCategorias, categorias } = useContext(productosContext);
 	useEffect(() => {
 		obtenerCategorias();
-        // eslint-disable-next-line
+		// eslint-disable-next-line
 	}, []);
 
 	return (
@@ -20,6 +21,13 @@ const Categorias = () => {
 			>
 				Nueva categoria
 			</Link>
+			{categorias.length ? (
+				categorias.map((categoria) => (
+					<Categoria key={categoria._id} categoria={categoria} />
+				))
+			) : (
+				<p className="mt-5 text-center text-2xl">No hay categorias</p>
+			)}
 		</Layout>
 	);
 };

@@ -18,7 +18,10 @@ import {
 	PAGINA_SIGUIENTE,
 	PAGINA_ANTERIOR,
 	CREAR_CATEGORIA_EXITO,
-	OBTENER_CATEGORIAS_EXITO
+	OBTENER_CATEGORIAS_EXITO,
+	ELIMINAR_CATEGORIA_EXITO,
+	SELECCIONAR_CATEGORIA,
+	ACTUALIZAR_CATEGORIA_EXITO,
 } from "../../types";
 
 const ProductoState = ({ children }) => {
@@ -33,6 +36,7 @@ const ProductoState = ({ children }) => {
 		productoseleccionado: null,
 		mensajeproducto: null,
 		categorias: [],
+		categoriaseleccionada: null,
 	};
 
 	const [state, dispatch] = useReducer(productosReducer, initialState);
@@ -164,7 +168,7 @@ const ProductoState = ({ children }) => {
 				payload: res.data,
 			});
 		} catch (error) {
-			Swal.fire("Error",error.response.data.msg,"error");
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
 	};
 
@@ -196,11 +200,11 @@ const ProductoState = ({ children }) => {
 			tokenAuth(token);
 		}
 		try {
-			const res = await axios.post("/api/categorias",{nombre:categoria});
-			Swal.fire("Correcto",res.data.msg,"success");
+			const res = await axios.post("/api/categorias", { nombre: categoria });
+			Swal.fire("Correcto", res.data.msg, "success");
 			dispatch({
 				type: CREAR_CATEGORIA_EXITO,
-				payload: {categoria:"success"},
+				payload: { categoria: "success" },
 			});
 			setTimeout(() => {
 				dispatch({
@@ -208,9 +212,9 @@ const ProductoState = ({ children }) => {
 				});
 			}, 1000);
 		} catch (error) {
-			Swal.fire("Correcto",error.response.data.msg,"success");
+			Swal.fire("Correcto", error.response.data.msg, "success");
 		}
-	}
+	};
 
 	const obtenerCategorias = async () => {
 		const token = localStorage.getItem("token");
@@ -224,9 +228,58 @@ const ProductoState = ({ children }) => {
 				payload: res.data,
 			});
 		} catch (error) {
-			Swal.fire("Correcto",error.response.data.msg,"success");
+			Swal.fire("Error", error.response.data.msg, "error");
 		}
-	}
+	};
+
+	const eliminarCategoria = async (_id) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.delete(`/api/categorias/${_id}`);
+			Swal.fire("Correcto", "Categoria Eliminada", "success");
+			dispatch({
+				type: ELIMINAR_CATEGORIA_EXITO,
+				payload: res.data._id,
+			});
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
+
+	const obtenerCategoria = (categoria) => {
+		dispatch({
+			type: SELECCIONAR_CATEGORIA,
+			payload: categoria,
+		});
+	};
+
+	const editarCategoria = async (categoria) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			tokenAuth(token);
+		}
+		try {
+			const res = await axios.put(
+				`/api/categorias/${categoria._id}`,
+				categoria
+			);
+			Swal.fire("Correcto", "categoria actualizada", "success");
+			dispatch({
+				type: ACTUALIZAR_CATEGORIA_EXITO,
+				payload: { categoriaActualizada: res.data, categoria: "success" },
+			});
+			setTimeout(() => {
+				dispatch({
+					type: LIMPIAR_MENSAJE,
+				});
+			}, 1000);
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+		}
+	};
 
 	return (
 		<productosContext.Provider
@@ -240,6 +293,7 @@ const ProductoState = ({ children }) => {
 				productosporpagina: state.productosporpagina,
 				cantidadpaginas: state.cantidadpaginas,
 				paginaactual: state.paginaactual,
+				categoriaseleccionada: state.categoriaseleccionada,
 				obtenerProductos,
 				buscarProducto,
 				nuevoProducto,
@@ -249,7 +303,10 @@ const ProductoState = ({ children }) => {
 				paginaSiguiente,
 				paginaAnterior,
 				nuevaCategoria,
-				obtenerCategorias
+				obtenerCategorias,
+				eliminarCategoria,
+				obtenerCategoria,
+				editarCategoria,
 			}}
 		>
 			{children}
