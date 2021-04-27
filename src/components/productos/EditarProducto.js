@@ -14,6 +14,8 @@ const EditarProducto = ({ history, match }) => {
 		mensajeproducto,
 		productoseleccionado,
 		actualizarProducto,
+		categorias,
+		obtenerCategorias
 	} = useContext(productosContext);
 
 	// slug
@@ -22,9 +24,15 @@ const EditarProducto = ({ history, match }) => {
 	// Routing
 	useEffect(() => {
 		if (mensajeproducto) {
-			if (mensajeproducto.categoria === "error" || mensajeproducto.categoria === "success") {
+			if (
+				mensajeproducto.categoria === "error" ||
+				mensajeproducto.categoria === "success"
+			) {
 				history.push("/productos");
 			}
+		}
+		if (!categorias.length) {
+			obtenerCategorias();
 		}
 		// eslint-disable-next-line
 	}, [mensajeproducto]);
@@ -34,7 +42,7 @@ const EditarProducto = ({ history, match }) => {
 			buscarProducto(slug);
 		}
 		// eslint-disable-next-line
-	}, [slug])
+	}, [slug]);
 
 	// Imagen
 	const [imagen, setImagen] = useState([]);
@@ -95,20 +103,20 @@ const EditarProducto = ({ history, match }) => {
 
 	const handleSubmit = (datos) => {
 		const formData = new FormData();
-			formData.append("nombre", datos.nombre);
-			formData.append("precioCosto", datos.costo);
-			formData.append("precioVenta", datos.venta);
-			formData.append("cantidad", datos.cantidad);
-			formData.append("categoria", datos.categoria);
-			if (imagen.length) {
-				formData.append("imagen", imagen[0]);
-			}
-		actualizarProducto(formData,_id);
+		formData.append("nombre", datos.nombre);
+		formData.append("precioCosto", datos.costo);
+		formData.append("precioVenta", datos.venta);
+		formData.append("cantidad", datos.cantidad);
+		formData.append("categoria", datos.categoria);
+		if (imagen.length) {
+			formData.append("imagen", imagen[0]);
+		}
+		actualizarProducto(formData, _id);
 	};
 
 	return (
 		<Layout>
-			<RutaAdminstrador/>
+			<RutaAdminstrador />
 			<button
 				type="button"
 				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
@@ -277,9 +285,14 @@ const EditarProducto = ({ history, match }) => {
 										onChange={props.handleChange}
 									>
 										<option value="">-- SELECCIONE --</option>
-										<option value="HOGAR">HOGAR</option>
-										<option value="GOLOSINAS">GOLOSINAS</option>
-										<option value="PERSONALES">PERSONALES</option>
+										{categorias.map((categoria) => (
+											<option
+												key={categoria._id}
+												value={categoria._id}
+											>
+												{categoria.nombre}
+											</option>
+										))}
 									</select>
 								</div>
 								{props.errors.categoria && (

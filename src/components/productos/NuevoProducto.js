@@ -9,16 +9,21 @@ import RutaAdminstrador from "../rutas/RutaAdministrador";
 
 const NuevoProducto = ({ history }) => {
 	// Context
-	const { nuevoProducto, mensajeproducto } = useContext(productosContext);
+	const { nuevoProducto, mensajeproducto, categorias, obtenerCategorias } = useContext(
+		productosContext
+	);
 
 	// Routing
 	useEffect(() => {
-        if (mensajeproducto) {
-            if (mensajeproducto.categoria === "success") {
+		if (mensajeproducto) {
+			if (mensajeproducto.categoria === "success") {
 				history.push("/productos");
-            }
-        }
-        // eslint-disable-next-line
+			}
+		}
+		if (!categorias.length) {
+			obtenerCategorias();
+		}
+		// eslint-disable-next-line
 	}, [mensajeproducto]);
 
 	// Imagen
@@ -81,7 +86,7 @@ const NuevoProducto = ({ history }) => {
 	});
 	return (
 		<Layout>
-			<RutaAdminstrador/>
+			<RutaAdminstrador />
 			<button
 				type="button"
 				className="mt-4 bg-blue-800 px-5 py-2 block text-white rounded leading-tight uppercase text-xs font-bold text-center mb-10 w-full md:w-auto"
@@ -228,9 +233,11 @@ const NuevoProducto = ({ history }) => {
 							onChange={formik.handleChange}
 						>
 							<option value="">-- SELECCIONE --</option>
-							<option value="HOGAR">HOGAR</option>
-							<option value="GOLOSINAS">GOLOSINAS</option>
-							<option value="PERSONALES">PERSONALES</option>
+							{categorias.map((categoria) => (
+								<option key={categoria._id} value={categoria._id}>
+									{categoria.nombre}
+								</option>
+							))}
 						</select>
 					</div>
 					<input

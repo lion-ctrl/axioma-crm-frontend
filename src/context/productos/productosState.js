@@ -133,6 +133,7 @@ const ProductoState = ({ children }) => {
 	};
 
 	const actualizarProducto = async (datos, _id) => {
+
 		const token = localStorage.getItem("token");
 		if (token) {
 			tokenAuth(token);
