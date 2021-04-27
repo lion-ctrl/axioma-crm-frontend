@@ -13,6 +13,7 @@ import EditarProducto from "./components/productos/EditarProducto";
 import Usuarios from "./components/usuarios/Usuarios";
 import NuevoUsuario from "./components/usuarios/NuevoUsuario";
 import VerUsuario from "./components/usuarios/VerUsuario";
+import EditarUsuario from "./components/usuarios/EditarUsuario";
 
 import Gastos from "./components/gastos/Gastos";
 import NuevoGasto from "./components/gastos/NuevoGasto";
@@ -63,6 +64,7 @@ function App() {
                     <RutaPrivada exact path="/usuarios" component={Usuarios} />
                     <RutaPrivada exact path="/nuevo-usuario" component={NuevoUsuario} />
                     <RutaPrivada exact path="/ver-usuario/:id" component={VerUsuario} />
+                    <RutaPrivada exact path="/usuario/editar/:id" component={EditarUsuario} />
                 
                     <RutaPrivada exact path="/productos" component={Productos} />
                     <RutaPrivada exact path="/producto/:slug" component={VerProducto} />

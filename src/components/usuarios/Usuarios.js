@@ -13,6 +13,7 @@ const Usuarios = () => {
 		obtenerUsuarios,
 		usuarios,
 		eliminarUsuario,
+		editarEmpleado
 	} = useContext(usuariosContext);
 
 	useEffect(() => {
@@ -38,6 +39,7 @@ const Usuarios = () => {
 						key={usuario._id}
 						usuario={usuario}
 						eliminarUsuario={eliminarUsuario}
+						editarEmpleado={editarEmpleado}
 					/>
 				))
 			) : (

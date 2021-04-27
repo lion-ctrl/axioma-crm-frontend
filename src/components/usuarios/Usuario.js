@@ -2,7 +2,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-const Usuario = ({ usuario, eliminarUsuario }) => {
+const Usuario = ({ usuario, eliminarUsuario, editarEmpleado }) => {
 	const eliminarEmpleado = (_id) => {
 		Swal.fire({
 			title: "¿Seguro?",
@@ -19,6 +19,10 @@ const Usuario = ({ usuario, eliminarUsuario }) => {
 			}
 		});
 	};
+
+	const editarUsuario = (empleado) => {
+		editarEmpleado(empleado);
+	}
 	return (
 		<div
 			className={`mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg`}
@@ -63,6 +67,23 @@ const Usuario = ({ usuario, eliminarUsuario }) => {
 							d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
 							clipRule="evenodd"
 						/>
+					</svg>
+				</Link>
+				<Link
+					to={`/usuario/editar/${usuario._id}`}
+					className="flex items-center justify-center mt-4 bg-green-800 px-5 py-2 inline-block text-white rounded leading-tight uppercase text-xs font-bold w-full"
+					onClick={() => editarUsuario(usuario)}
+				>
+					Editar Empleado{" "}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="h-5 w-5"
+						viewBox="0 0 20 20"
+						fill="currentColor"
+						// eslint-disable-next-line
+						className="w-4 h-4 ml-2"
+					>
+						<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
 					</svg>
 				</Link>
 

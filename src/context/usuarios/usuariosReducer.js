@@ -4,7 +4,8 @@ import {
 	ELIMINAR_USUARIO_EXITO,
 	LIMPIAR_MENSAJE,
     OBTENER_USUARIO_EXITO,
-    OBTENER_USUARIO_ERROR
+    OBTENER_USUARIO_ERROR,
+	EDITAR_EMPLEADO_EXITO
 } from "../../types";
 
 const usuariosReducer = (state, action) => {
@@ -17,6 +18,7 @@ const usuariosReducer = (state, action) => {
 			};
 		case REGISTRAR_USUARIO_EXITO:
         case OBTENER_USUARIO_ERROR:
+		case EDITAR_EMPLEADO_EXITO:
 			return {
 				...state,
 				mensajeusuario: action.payload,

@@ -11,6 +11,7 @@ import {
 	ELIMINAR_USUARIO_EXITO,
 	OBTENER_USUARIO_EXITO,
 	OBTENER_USUARIO_ERROR,
+	EDITAR_EMPLEADO_EXITO
 } from "../../types";
 
 import axios from "../../config/clienteAxios";
@@ -109,6 +110,36 @@ const UsuariosState = ({ children }) => {
 			}
 	};
 
+	const editarEmpleado = (empleado) => {
+		dispatch({
+			type: OBTENER_USUARIO_EXITO,
+			payload: empleado,
+		});
+	}
+
+	const editarEmpleadoPut = async (datos) => {
+		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				tokenAuth(token);
+			}
+			const res = await axios.put(`/api/usuarios/${datos._id}`,datos);
+			Swal.fire("Correcto", res.data.msg, "success");
+			dispatch({
+				type: EDITAR_EMPLEADO_EXITO,
+				payload: { categoria: "success" },
+			});
+		} catch (error) {
+			Swal.fire("Error", error.response.data.msg, "error");
+
+		}
+		setTimeout(() => {
+			dispatch({
+				type: LIMPIAR_MENSAJE,
+			});
+		}, 1000);
+	}
+
 	return (
 		<usuariosContext.Provider
 			value={{
@@ -119,6 +150,8 @@ const UsuariosState = ({ children }) => {
 				registrarUsuario,
 				eliminarUsuario,
 				seleccionarUsuario,
+				editarEmpleado,
+				editarEmpleadoPut
 			}}
 		>
 			{children}
