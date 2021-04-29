@@ -10,7 +10,7 @@ const useCategoriaFiltro = (categoriasSeleccionadas) => {
 				<div className="w-1/3 mr-2">
 					<Link
 						to={"/categorias"}
-						className="bg-green-800 p-2 inline-block text-white rounded text-xs hover:bg-gray-800 uppercase font-bold text-center"
+						className="bg-green-800 p-2 md:w-full inline-block text-white rounded text-xs hover:bg-gray-800 uppercase font-bold text-center"
 					>
 						Categorias
 					</Link>

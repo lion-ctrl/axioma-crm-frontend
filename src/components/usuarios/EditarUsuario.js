@@ -16,6 +16,7 @@ const EditarUsuario = ({history}) => {
                 history.push("/usuarios");
             }
         }
+        // eslint-disable-next-line
     }, [mensajeusuario])
 
 	if (!usuarioseleccionado) return <Redirect to="/usuarios" />;
