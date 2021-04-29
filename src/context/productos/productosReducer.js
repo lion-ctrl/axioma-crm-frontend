@@ -56,10 +56,6 @@ const productosReducer = (state, action) => {
 				productos: state.productos.filter(
 					(producto) => producto._id !== action.payload._id
 				),
-				mensajeproducto: {
-					msg: action.payload.msg,
-					categoria: action.payload.categoria,
-				},
 			};
 		case LIMPIAR_MENSAJE:
 			return {
